@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node server.js",
+    "server": "nodemon --exec babel-node server.js",
+    "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
