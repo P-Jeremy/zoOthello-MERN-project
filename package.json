@@ -7,7 +7,7 @@
     "server": "nodemon --exec babel-node server.js",
     "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node server.js",
-    "test": "jest src/components",
+    "test:client": "jest src/components",
     "build": "webpack --mode production",
     "lint": "eslint **/*.js"
   },
@@ -28,6 +28,7 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "react-toastify": "^5.5.0",
     "reversi": "^3.0.0",
     "socket.io": "^2.3.0",

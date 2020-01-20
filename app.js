@@ -23,8 +23,12 @@ app.use(express.static(DIST_DIR))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (_req, res) => {
-  res.sendFile(HTML_FILE)
+app.get('/*', (_req, res) => {
+  res.sendFile(HTML_FILE, function (err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
 })
 
 app.use('/api/game', gameRouter)
