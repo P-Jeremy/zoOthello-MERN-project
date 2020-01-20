@@ -1,12 +1,14 @@
-const express = require('express')
-const path = require('path')
-const app = express()
+const http = require('http')
+const app = require('./app')
+const socketio = require('socket.io')
 
-const DIST_DIR = path.join(__dirname, './dist')
-const HTML_FILE = path.join(DIST_DIR, 'index.html')
+const port = process.env.PORT || '3000'
 
-app.use(express.static(DIST_DIR))
-app.get('/', (_req, res) => {
-  res.sendFile(HTML_FILE)
-})
-app.listen(3000, () => console.log('App listening on port 3000!'))
+app.set('port', port)
+const server = http.createServer(app)
+const io = socketio.listen(server)
+app.set('socketIo', io)
+
+module.exports = app
+
+server.listen(port, () => console.log('Server listenning on:', port))

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pawn Basic rendering 1`] = `
+<div
+  className="pawn black"
+/>
+`;
+
+exports[`Pawn Should change "black" className to white on props change 1`] = `
+<div
+  className="pawn white"
+/>
+`;

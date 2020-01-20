@@ -2,8 +2,20 @@
   "presets": [
     [
       "@babel/preset-env",
-      { "targets": { "node": "current" }}
+      { "targets": { "node": "current",  "chrome": "58",
+        "ie": "11" }}
     ],
     "@babel/preset-react"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime", { "regenerator": true }
+    ],
+    [ 
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ]
   ]
 }

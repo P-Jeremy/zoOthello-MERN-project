@@ -1,0 +1,31 @@
+
+.pawn {
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.black {
+  border: 1px solid white;
+  box-shadow: 3px 3px 3px black;
+  background-color: black;
+}
+
+.white {
+  border: 1px solid black;
+  box-shadow: 3px 3px 3px black;
+  background-color: white;
+}
+
+@media only screen and (min-width:768px) {
+  .pawn {
+    min-width: 3rem;
+    min-height: 3rem;
+  }
+}
+
+@media only screen and (min-width:0px) and (max-width:767px) {
+  .pawn {
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+  }
+}

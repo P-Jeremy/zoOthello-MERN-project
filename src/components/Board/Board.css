@@ -1,0 +1,28 @@
+.board {
+  flex-wrap: nowrap;
+  max-width: 60rem;
+  max-height: 60rem;
+  margin: 0 auto;
+  box-shadow: 20px 10px 10px black;
+}
+
+.board_container {
+  display: flex;
+}
+
+.player_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.no_gutter {
+  padding-left: 0;
+  padding-right: 0;
+  display: inline-block;
+}
+
+.pawn_player {
+  margin: 0 auto;
+  max-height: 50px;
+  max-width: 50px;
+}
