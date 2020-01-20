@@ -1,3 +1,4 @@
+import 'jsdom-global/register'
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
 import Game from './Game'

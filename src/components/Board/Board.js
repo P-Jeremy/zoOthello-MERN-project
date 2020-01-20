@@ -1,7 +1,7 @@
 import React from 'react'
 import Row from '../Row/Row'
 import PropTypes from 'prop-types'
-import './Board.css'
+import './Board.scss'
 
 export default function Board ({ board, click }) {
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import Square from '../Square/Square'
 import PropTypes from 'prop-types'
-import './Row.css'
+import './Row.scss'
 
 export default function Row ({ col, click }) {
   return (

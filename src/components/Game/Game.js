@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Game.css'
+import './Game.scss'
 import { Button } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import Board from '../Board/Board'

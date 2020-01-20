@@ -1,3 +1,4 @@
+import 'jsdom-global/register'
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import TestRenderer from 'react-test-renderer'

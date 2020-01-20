@@ -2,7 +2,7 @@ import React from 'react'
 import Pawn from '../Pawn/Pawn'
 import PropTypes from 'prop-types'
 
-import './Square.css'
+import './Square.scss'
 
 export default function Square ({ value, click, rowI, colI }) {
   /**
