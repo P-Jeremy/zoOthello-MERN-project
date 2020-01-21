@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Button, Card, Container } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 const uri = 'http://localhost:3000/api/user'
@@ -9,13 +10,13 @@ export default class SignUpForm extends Component {
     email: '',
     password: '',
     passwordBis: '',
-    pseudo: ''
+    pseudo: '',
+    redirectToHome: false
   }
 
   handleChange = (e) => {
     const { name, value } = e.target
     this.setState({ [name]: value })
-    console.log(this.state)
   }
 
   handleSubmit (e) {
@@ -23,13 +24,16 @@ export default class SignUpForm extends Component {
     const { pseudo, email, password, passwordBis } = this.state
     if (password !== passwordBis) return false
     axios.post(uri, { pseudo, email, password })
-      .then(res => console.log(res))
+      .then((res) => { if (res.status === 200) this.setState({ redirectToHome: true }) })
       .catch(err => console.error(err))
   }
 
   render () {
-    const { email, pseudo, password, passwordBis } = this.state
+    const { email, pseudo, password, passwordBis, redirectToHome } = this.state
     const { handleChange, handleSubmit } = this
+    if (redirectToHome) {
+      return (<Redirect to="/"/>)
+    }
     return (
       <Container>
         <Card>
