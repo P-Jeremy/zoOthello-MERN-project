@@ -22,8 +22,8 @@ export default class SignUpForm extends Component {
     e.preventDefault()
     const { pseudo, email, password, passwordBis } = this.state
     if (password !== passwordBis) return false
-    axios.post(uri, { pseudo, email, password }
-      .then(res => console.log(res)))
+    axios.post(uri, { pseudo, email, password })
+      .then(res => console.log(res))
       .catch(err => console.error(err))
   }
 

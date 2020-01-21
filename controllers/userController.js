@@ -3,17 +3,25 @@ const bcrypt = require('bcryptjs')
 
 module.exports = class UserController {
   async addUser (req, res) {
+    console.log('COUCOU', req.body)
+
     const { email, pseudo, password } = req.body
     const hash = await bcrypt.hash(password, 10)
+    console.log('HASH', hash)
+
     const foundUser = await User.findOne({ pseudo: pseudo })
     if (foundUser) res.status(403).json({ message: 'User alread exists' })
     try {
-      const newUser = {
+      const newUser = new User({
         email,
         pseudo,
         password: hash
-      }
-      const result = User.save(newUser)
+      })
+      console.log('NEWUSER', newUser)
+
+      const result = await newUser.save()
+      console.log('RESULT', result)
+
       return res.status(200).json(result)
     } catch (error) {
       res.status(500).json(error.message)
