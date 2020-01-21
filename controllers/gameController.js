@@ -58,6 +58,21 @@ module.exports = class GameController {
     }
   };
 
+  async getUserGames (req, res) {
+    const { id } = req.params
+    try {
+      const results = await Game.find({ $or: [{ blackPlayer: id }, { whitePlayer: id }] })
+      return res
+        .status(200)
+        .json(results)
+        .end()
+    } catch (error) {
+      return res
+        .status(400)
+        .end()
+    }
+  };
+
   /** Get one game */
   async getGame (req, res) {
     const { id } = req.params

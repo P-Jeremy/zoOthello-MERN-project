@@ -11,6 +11,9 @@ router.get('/', controller.getGames)
 /** GET ONE GAME */
 router.get('/one/:id', controller.getGame)
 
+/** GET ALL GAMES OF A USER */
+router.get('/user/:id', controller.getUserGames)
+
 /** ADD A GAME */
 router.post('/', controller.addGame)
 

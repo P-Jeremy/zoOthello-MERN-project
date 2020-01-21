@@ -23,6 +23,8 @@ mongoose
 app.use(express.static(DIST_DIR))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use('/api/game', gameRouter)
+app.use('/api/user', userRouter)
 
 app.get('/*', (_req, res) => {
   res.sendFile(HTML_FILE, function (err) {
@@ -31,8 +33,5 @@ app.get('/*', (_req, res) => {
     }
   })
 })
-
-app.use('/api/game', gameRouter)
-app.use('/api/user', userRouter)
 
 module.exports = app
