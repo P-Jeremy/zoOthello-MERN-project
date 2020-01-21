@@ -10,6 +10,8 @@ import {
 } from 'react-router-dom'
 import SignInForm from './components/SignInForm/SignInForm'
 import SignUpForm from './components/SignUpForm/SignUpForm'
+import HomeOut from './components/HomeOut/HomeOut'
+import HomeIn from './components/HomeIn/HomeIn'
 
 export default class App extends Component {
   render () {
@@ -19,6 +21,9 @@ export default class App extends Component {
         <main>
           <Router>
             <Switch>
+              <Route exact path="/">
+                <HomeOut/>
+              </Route>
               <Route path="/game">
                 <Game />
               </Route>
@@ -27,6 +32,9 @@ export default class App extends Component {
               </Route>
               <Route path="/inscription">
                 <SignUpForm/>
+              </Route>
+              <Route path="/home/user">
+                <HomeIn/>
               </Route>
             </Switch>
           </Router>

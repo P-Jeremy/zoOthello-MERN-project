@@ -21,8 +21,12 @@ export default class SignInForm extends Component {
     const { pseudo, password } = this.state
     axios.post(uri, { pseudo, password })
       .then((res) => {
-        console.log(res)
-        // if (res.status === 200) this.setState({ redirectToUserHome: true })
+        if (res.status === 200) {
+          localStorage.setItem('userId', res.data.fetchedUser._id)
+          localStorage.setItem('loggedIn', true)
+
+          return this.setState({ redirectToUserHome: true })
+        }
       })
       .catch(err => console.error(err))
   }
@@ -31,7 +35,7 @@ export default class SignInForm extends Component {
     const { pseudo, password, redirectToUserHome } = this.state
     const { handleChange, handleSubmit } = this
     if (redirectToUserHome) {
-      return (<Redirect to="#"/>)
+      return (<Redirect to="/home/user"/>)
     }
     return (
       <Container>
