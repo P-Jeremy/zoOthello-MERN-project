@@ -14,6 +14,9 @@ const controller = new UserController()
 /** ADD A USER */
 router.post('/', controller.addUser)
 
+/** SIGN IN */
+router.post('/signIn', controller.signIn)
+
 // /** UPDATE A GAME */
 // router.put('/:id', controller.updateGame)
 

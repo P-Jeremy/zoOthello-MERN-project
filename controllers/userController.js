@@ -19,4 +19,25 @@ module.exports = class UserController {
       res.status(500).json(error.message)
     }
   }
+
+  /** Allows a user to signin */
+  async signIn (req, res, next) {
+    const fetchedUser = await User.findOne({ pseudo: req.body.pseudo })
+    if (!fetchedUser) {
+      return res.status(403).json({
+        message: "User doesn't"
+      })
+    }
+    try {
+      const allowedUser = await bcrypt.compare(
+        req.body.password,
+        fetchedUser.password
+      )
+      return res.status(200).json({ allowedUser })
+    } catch (error) {
+      return res.status(403).json(
+        error.message
+      )
+    }
+  };
 }
