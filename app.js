@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const gameRouter = require('./routes/gameRouter')
+const userRouter = require('./routes/userRouter')
 const mongoConf = process.env.MONGO_CONFIG_URL
 const path = require('path')
 const app = express()
@@ -32,5 +33,6 @@ app.get('/*', (_req, res) => {
 })
 
 app.use('/api/game', gameRouter)
+app.use('/api/user', userRouter)
 
 module.exports = app
