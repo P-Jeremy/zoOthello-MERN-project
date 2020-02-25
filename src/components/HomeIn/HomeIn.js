@@ -53,9 +53,9 @@ render () {
   return (
     <div>
       <Container>
-        <Form>
+        <Form style={ { width: 25 + '%', margin: '3rem auto' }}>
           <Form.Group controlId="pseudo">
-            <Form.Label>Adversaire</Form.Label>
+            <Form.Label>Nouvelle partie</Form.Label>
             <Form.Control
               type="text"
               onChange={handleChange.bind(this)}
@@ -69,7 +69,7 @@ render () {
             tabIndex={0}
             variant="primary"
             onClick={handleNewGame}>
-              Nouvelle partie
+              Créer
           </Button>
         </Form>
       </Container>
