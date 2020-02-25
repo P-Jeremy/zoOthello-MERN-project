@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import reversi from 'reversi/index'
-import { Button } from 'react-bootstrap'
+import { Button, Form, Container } from 'react-bootstrap'
 import axios from 'axios'
 
 const uri = 'http://localhost:3000/api/game'
@@ -12,6 +12,7 @@ export default class HomeIn extends Component {
   state = {
     redirectToHome: false,
     userId: '',
+    opponent: '',
     games: []
   }
 
@@ -21,6 +22,11 @@ export default class HomeIn extends Component {
     if (!isUserAllowed) this.setState({ redirectToHome: true })
     this.getUsersGame(user)
     return this.setState({ userId: user })
+  }
+
+  handleChange = (e) => {
+    const { name, value } = e.target
+    this.setState({ [name]: value })
   }
 
   getUsersGame (id) {
@@ -39,20 +45,34 @@ handleNewGame = async () => {
 }
 
 render () {
-  const { redirectToHome } = this.state
-  const { handleNewGame } = this
+  const { redirectToHome, opponent } = this.state
+  const { handleNewGame, handleChange } = this
   if (redirectToHome) {
     return (<Redirect to="/"/>)
   }
   return (
     <div>
-        HOME IN
-      <Button
-        tabIndex={0}
-        variant="primary"
-        onClick={handleNewGame}>
+      <Container>
+        <Form>
+          <Form.Group controlId="pseudo">
+            <Form.Label>Adversaire</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={handleChange.bind(this)}
+              name="opponent"
+              value={opponent}
+              placeholder="pseudo de votre adversaire"
+            />
+          </Form.Group>
+          <Button
+            type="submit"
+            tabIndex={0}
+            variant="primary"
+            onClick={handleNewGame}>
               Nouvelle partie
-      </Button>
+          </Button>
+        </Form>
+      </Container>
     </div>
   )
 }
