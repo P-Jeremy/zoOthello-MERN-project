@@ -20,6 +20,13 @@ module.exports = class UserController {
     }
   }
 
+  async searchUser (req, res, next) {
+    const { search } = req.body
+    const userRegex = new RegExp('^' + search, 'i')
+    const fetchedUsers = await User.find({ pseudo: { $regex: userRegex } })
+    return res.status(200).json({ fetchedUsers })
+  }
+
   /** Allows a user to signin */
   async signIn (req, res, next) {
     const fetchedUser = await User.findOne({ pseudo: req.body.pseudo })

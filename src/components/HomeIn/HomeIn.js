@@ -4,7 +4,7 @@ import reversi from 'reversi/index'
 import { Button, Form, Container } from 'react-bootstrap'
 import axios from 'axios'
 
-const uri = 'http://localhost:3000/api/game'
+const uri = 'http://localhost:3000/api'
 
 const Reversi = reversi.Game
 
@@ -13,6 +13,7 @@ export default class HomeIn extends Component {
     redirectToHome: false,
     userId: '',
     opponent: '',
+    opponents: [],
     games: []
   }
 
@@ -27,6 +28,8 @@ export default class HomeIn extends Component {
   handleChange = (e) => {
     const { name, value } = e.target
     this.setState({ [name]: value })
+    axios.post(`${uri}/user/search`, { search: value })
+      .then(res => console.log(res))
   }
 
   getUsersGame (id) {
@@ -41,7 +44,7 @@ export default class HomeIn extends Component {
 handleNewGame = async () => {
   const origin = 'new'
   const newGame = new Reversi()
-  await axios.post(uri, { newGame, origin })
+  await axios.post(`${uri}/game`, { newGame, origin })
 }
 
 render () {
@@ -61,6 +64,7 @@ render () {
               onChange={handleChange.bind(this)}
               name="opponent"
               value={opponent}
+              className="text-muted"
               placeholder="pseudo de votre adversaire"
             />
           </Form.Group>
