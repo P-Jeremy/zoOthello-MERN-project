@@ -36,7 +36,7 @@ export default class HomeIn extends Component {
       <div>
         <SearchBar/>
         {
-          games.length && <GamesList games={games} />
+          games.length > 0 && <GamesList games={games} />
         }
       </div>
     )
