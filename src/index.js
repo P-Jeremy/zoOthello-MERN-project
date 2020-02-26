@@ -1,5 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import AppContainer from './appContainer'
+import { Provider } from 'react-redux'
+import store from './store/store'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const Root = (
+  <>
+    <Provider store = {store}>
+      <AppContainer/>
+    </Provider>
+  </>
+)
+
+ReactDOM.render(Root, document.getElementById('root'))

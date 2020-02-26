@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './App.scss'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import NavbarContainer from './components/Navbar/NavbarContainer'
@@ -11,37 +11,56 @@ import {
 import SignUpForm from './components/SignUpForm/SignUpForm'
 import HomeOut from './components/HomeOut/HomeOut'
 import HomeIn from './components/HomeIn/HomeIn'
-import { Provider } from 'react-redux'
-import store from './store/store'
 import SignInContainer from './components/SignInForm/SignInContainer'
+import PropTypes from 'prop-types'
 
-const App = () => (<>
-  <div className="App">
-    <Provider store={store}>
-      <NavbarContainer />
-      <main>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <HomeOut />
-            </Route>
-            <Route path="/game">
-              <Game />
-            </Route>
-            <Route path="/connexion">
-              <SignInContainer />
-            </Route>
-            <Route path="/inscription">
-              <SignUpForm />
-            </Route>
-            <Route path="/home/user">
-              <HomeIn />
-            </Route>
-          </Switch>
-        </Router>
-      </main>
-    </Provider>
-  </div>
-</>)
+class App extends Component {
+  state = {
+    loggedIn: false
+  }
+
+  async componentDidMount () {
+    await this.props.checkAuth()
+    const isAuth = this.props.auth
+    this.setState({ loggedIn: isAuth })
+  }
+
+  render () {
+    const { loggedIn } = this.state
+    return (
+      <div className="App" >
+        <NavbarContainer/>
+        <main>
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                {
+                  loggedIn && <HomeIn/>
+                }
+                {
+                  !loggedIn && <HomeOut/>
+                }
+              </Route>
+              <Route path="/game">
+                <Game />
+              </Route>
+              <Route path="/connexion">
+                <SignInContainer/>
+              </Route>
+              <Route path="/inscription">
+                <SignUpForm/>
+              </Route>
+            </Switch>
+          </Router>
+        </main>
+      </div>
+    )
+  }
+}
+
+App.propTypes = {
+  checkAuth: PropTypes.func,
+  auth: PropTypes.bool
+}
 
 export default App

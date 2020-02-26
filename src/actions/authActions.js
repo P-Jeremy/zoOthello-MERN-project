@@ -2,6 +2,14 @@ import axios from 'axios'
 
 const uri = 'http://localhost:3000/api/user'
 
+export const CHECK_AUTH = 'CHECK_AUTH'
+export const checkAuth = () => {
+  return function (dispatch) {
+    const payload = JSON.parse(localStorage.getItem('loggedIn'))
+    dispatch({ type: CHECK_AUTH, payload })
+  }
+}
+
 export const LOG_IN = 'LOG_IN'
 export const logIn = (user) => {
   return async function (dispatch) {
