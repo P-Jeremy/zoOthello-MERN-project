@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.scss'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from './components/Navbar/Navbar'
+import NavbarContainer from './components/Navbar/NavbarContainer'
 import Game from './components/Game/Game'
 import {
   BrowserRouter as Router,
@@ -18,7 +18,7 @@ import SignInContainer from './components/SignInForm/SignInContainer'
 const App = () => (<>
   <div className="App">
     <Provider store={store}>
-      <Navbar />
+      <NavbarContainer />
       <main>
         <Router>
           <Switch>
