@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import SearchBar from '../SearchBar/SearchBar'
+import GamesList from '../GamesList/GamesList'
 
 const uri = 'http://localhost:3000/api'
 
@@ -9,8 +10,6 @@ export default class HomeIn extends Component {
   state = {
     redirectToHome: false,
     userId: '',
-    opponent: '',
-    opponents: [],
     games: []
   }
 
@@ -29,13 +28,16 @@ export default class HomeIn extends Component {
   }
 
   render () {
-    const { redirectToHome } = this.state
+    const { redirectToHome, games } = this.state
     if (redirectToHome) {
       return (<Redirect to="/"/>)
     }
     return (
       <div>
         <SearchBar/>
+        {
+          games.length && <GamesList games={games} />
+        }
       </div>
     )
   }
