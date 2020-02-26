@@ -3,14 +3,16 @@ import axios from 'axios'
 const uri = 'http://localhost:3000/api/user'
 
 export const LOG_IN = 'LOG_IN'
-export const logIn = ({ user }) => {
+export const logIn = (user) => {
   return async function (dispatch) {
     const res = await axios.post(`${uri}/signIn`, user)
+    let payload = false
     if (res.status === 200) {
+      payload = true
       localStorage.setItem('userId', res.data.fetchedUser._id)
       localStorage.setItem('loggedIn', true)
     }
-    dispatch({ type: LOG_IN, payload: true })
+    dispatch({ type: LOG_IN, payload })
   }
 }
 

@@ -10,6 +10,12 @@ export default class SignInForm extends Component {
     redirectToUserHome: false
   }
 
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const { auth } = nextProps
+    const isUserLoggedIn = auth
+    return auth === { redirectToUserHome: prevState } ? { redirectToUserHome: prevState } : { redirectToUserHome: isUserLoggedIn }
+  }
+
   handleChange = (e) => {
     const { name, value } = e.target
     this.setState({ [name]: value })
@@ -28,7 +34,7 @@ export default class SignInForm extends Component {
   render () {
     const { pseudo, password, redirectToUserHome } = this.state
     const { handleChange, handleSubmit } = this
-    if (redirectToUserHome) {
+    if (redirectToUserHome === true) {
       return (<Redirect to="/home/user"/>)
     }
     return (
@@ -54,5 +60,6 @@ export default class SignInForm extends Component {
 }
 
 SignInForm.propTypes = {
-  logIn: PropTypes.func
+  logIn: PropTypes.func,
+  auth: PropTypes.bool
 }
