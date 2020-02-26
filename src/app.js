@@ -8,35 +8,39 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import SignInForm from './components/SignInForm/SignInForm'
 import SignUpForm from './components/SignUpForm/SignUpForm'
 import HomeOut from './components/HomeOut/HomeOut'
 import HomeIn from './components/HomeIn/HomeIn'
+import { Provider } from 'react-redux'
+import store from './store/store'
+import SignInContainer from './components/SignInForm/SignInContainer'
 
 const App = () => (<>
   <div className="App">
-    <Navbar />
-    <main>
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <HomeOut />
-          </Route>
-          <Route path="/game">
-            <Game />
-          </Route>
-          <Route path="/connexion">
-            <SignInForm />
-          </Route>
-          <Route path="/inscription">
-            <SignUpForm />
-          </Route>
-          <Route path="/home/user">
-            <HomeIn />
-          </Route>
-        </Switch>
-      </Router>
-    </main>
+    <Provider store={store}>
+      <Navbar />
+      <main>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <HomeOut />
+            </Route>
+            <Route path="/game">
+              <Game />
+            </Route>
+            <Route path="/connexion">
+              <SignInContainer />
+            </Route>
+            <Route path="/inscription">
+              <SignUpForm />
+            </Route>
+            <Route path="/home/user">
+              <HomeIn />
+            </Route>
+          </Switch>
+        </Router>
+      </main>
+    </Provider>
   </div>
 </>)
 

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Button, Card, Container } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
+import PropTypes from 'prop-types'
 
-const uri = 'http://localhost:3000/api/user/signIn'
 export default class SignInForm extends Component {
   state = {
     password: '',
@@ -19,16 +18,11 @@ export default class SignInForm extends Component {
   handleSubmit (e) {
     e.preventDefault()
     const { pseudo, password } = this.state
-    axios.post(uri, { pseudo, password })
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.setItem('userId', res.data.fetchedUser._id)
-          localStorage.setItem('loggedIn', true)
-
-          return this.setState({ redirectToUserHome: true })
-        }
-      })
-      .catch(err => console.error(err))
+    const user = {
+      pseudo,
+      password
+    }
+    this.props.logIn(user)
   }
 
   render () {
@@ -57,4 +51,8 @@ export default class SignInForm extends Component {
       </Container>
     )
   }
+}
+
+SignInForm.propTypes = {
+  logIn: PropTypes.func
 }
