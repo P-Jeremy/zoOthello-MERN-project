@@ -11,21 +11,26 @@ const Reversi = reversi.Game
 export default class SearchBar extends Component {
   state = {
     opponent: '',
+    userId: '',
+    opponentId: '',
     opponents: []
+  }
+
+  componentDidMount () {
+    const id = localStorage.getItem('userId')
+    this.setState({ userId: id })
   }
 
   autoComplete () {
     const { opponent } = this.state
     axios.post(`${uri}/user/search`, { search: opponent })
       .then(res => {
-        this.setState({ opponents: res.data.fetchedUsers }, () => {
-          console.log('USERS', this.state.opponents)
-        })
+        this.setState({ opponents: res.data.fetchedUsers })
       })
   }
 
   selectOption = (selected) => {
-    this.setState({ opponent: selected.pseudo, opponents: [] })
+    this.setState({ opponent: selected.pseudo, opponentId: selected._id, opponents: [] })
   }
 
   async handleChange (e) {
@@ -35,7 +40,9 @@ export default class SearchBar extends Component {
     if (opponent.length === 0) {
       return this.setState({ opponents: [] })
     }
-    this.autoComplete()
+    if (opponent.length > 2) {
+      this.autoComplete()
+    }
   }
 
   /**
@@ -64,11 +71,14 @@ export default class SearchBar extends Component {
                 className="text-muted"
                 placeholder="pseudo de votre adversaire"
               />
-              <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center' }}>
-                {
-                  opponents.length > 0 && opponents.map((opponent) => <li onClick={() => selectOption(opponent)} key={opponent._id}>{opponent.pseudo}</li>)
-                }
-              </ul>
+              {
+                opponents.length > 0 &&
+                <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center', zIndex: 1, border: '1px solid lightGrey', borderRadius: '3px' }}>
+                  {
+                    opponents.map((opponent) => <li onClick={() => selectOption(opponent)} key={opponent._id}>{opponent.pseudo}</li>)
+                  }
+                </ul>
+              }
             </Form.Group>
             <Button
               type="submit"
