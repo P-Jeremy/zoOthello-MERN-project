@@ -14,4 +14,6 @@ router.post('/', controller.addUser)
 /** SIGN IN */
 router.post('/signIn', controller.signIn)
 
+/** GET USER INFOS */
+router.get('/:id', controller.getUserInfo)
 module.exports = router

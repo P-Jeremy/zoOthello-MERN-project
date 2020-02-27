@@ -27,6 +27,12 @@ module.exports = class UserController {
     return res.status(200).json({ fetchedUsers })
   }
 
+  async getUserInfo (req, res, next) {
+    const { id } = req.params
+    const fetchedUsers = await User.find({ _id: id })
+    return res.status(200).json({ fetchedUsers })
+  }
+
   /** Allows a user to signin */
   async signIn (req, res, next) {
     const fetchedUser = await User.findOne({ pseudo: req.body.pseudo })

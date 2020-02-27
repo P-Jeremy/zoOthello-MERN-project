@@ -35,9 +35,11 @@ export default class HomeIn extends Component {
     return (
       <div>
         <SearchBar/>
-        {
-          games.length > 0 && <GamesList games={games} />
-        }
+        <ul>
+          {
+            games.length > 0 && games.map((game) => <GamesList key={game._id} game={game} />)
+          }
+        </ul>
       </div>
     )
   }
