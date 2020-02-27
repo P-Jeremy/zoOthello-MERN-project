@@ -19,6 +19,11 @@ class App extends Component {
     loggedIn: false
   }
 
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const { auth } = nextProps
+    return auth === { loggedIn: prevState } ? { loggedIn: prevState } : { loggedIn: auth }
+  }
+
   async componentDidMount () {
     await this.props.checkAuth()
     const isAuth = this.props.auth

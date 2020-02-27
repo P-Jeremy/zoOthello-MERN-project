@@ -35,31 +35,34 @@ export default class SignUpForm extends Component {
       return (<Redirect to="/"/>)
     }
     return (
-      <Container>
-        <Card>
-          <Form onSubmit={handleSubmit.bind(this)}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control onChange={handleChange.bind(this)} name="email" value={email} type="email" placeholder="Email" />
-            </Form.Group>
-            <Form.Group controlId="formBasicPseudo">
-              <Form.Label>Pseudo</Form.Label>
-              <Form.Control onChange={handleChange.bind(this)} name="pseudo" value={pseudo} type="text" placeholder="Pseudo" />
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Mot de passe</Form.Label>
-              <Form.Control onChange={handleChange.bind(this)} name="password" value={password} type="password" placeholder="Mot de passe" />
-            </Form.Group>
-            <Form.Group controlId="formBasicPasswordBis">
-              <Form.Label>Mot de passe</Form.Label>
-              <Form.Control onChange={handleChange.bind(this)} name="passwordBis" value={passwordBis} type="password" placeholder="Confirmer mot de passe" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
+      <div style={{ margin: '3rem' }}>
+        <Container>
+          <h2>Inscription</h2>
+          <Card style={ { width: 50 + '%', margin: '3rem auto', padding: '2rem' }}>
+            <Form onSubmit={handleSubmit.bind(this)}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control onChange={handleChange.bind(this)} name="email" value={email} type="email" placeholder="Email" />
+              </Form.Group>
+              <Form.Group controlId="formBasicPseudo">
+                <Form.Label>Pseudo</Form.Label>
+                <Form.Control onChange={handleChange.bind(this)} name="pseudo" value={pseudo} type="text" placeholder="Pseudo" />
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Mot de passe</Form.Label>
+                <Form.Control onChange={handleChange.bind(this)} name="password" value={password} type="password" placeholder="Mot de passe" />
+              </Form.Group>
+              <Form.Group controlId="formBasicPasswordBis">
+                <Form.Label>Mot de passe</Form.Label>
+                <Form.Control onChange={handleChange.bind(this)} name="passwordBis" value={passwordBis} type="password" placeholder="Confirmer mot de passe" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
               Valider
-            </Button>
-          </Form>
-        </Card>
-      </Container>
+              </Button>
+            </Form>
+          </Card>
+        </Container>
+      </div>
     )
   }
 }
