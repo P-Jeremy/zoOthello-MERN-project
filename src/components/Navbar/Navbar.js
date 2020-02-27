@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 export default class NavbarOthello extends Component {
@@ -13,8 +13,14 @@ export default class NavbarOthello extends Component {
     return auth === { userAuthenticated: prevState } ? { userAuthenticated: prevState } : { userAuthenticated: isUserLoggedIn }
   }
 
+  onLogOut () {
+    this.props.logOut()
+    window.location.href = '/'
+  }
+
   render () {
     const { userAuthenticated } = this.state
+    const { onLogOut } = this
 
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -24,7 +30,7 @@ export default class NavbarOthello extends Component {
           <Nav>
             {
               userAuthenticated &&
-            <Nav.Link href="/connexion">Se déconnecter</Nav.Link>
+            <Button onClick={onLogOut.bind(this)}>Se déconnecter</Button>
             }
             {
               !userAuthenticated &&
@@ -43,5 +49,6 @@ export default class NavbarOthello extends Component {
 }
 
 NavbarOthello.propTypes = {
-  auth: PropTypes.bool
+  auth: PropTypes.bool,
+  logOut: PropTypes.func
 }

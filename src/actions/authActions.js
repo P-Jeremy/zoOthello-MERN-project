@@ -24,10 +24,11 @@ export const logIn = (user) => {
   }
 }
 
-// export const LOG_OUT = 'LOG_OUT'
-// export const logOut = () => {
-//   return async function (dispatch) {
-//     const response = await axios.get('http://localhost:8080/api/list')
-//     dispatch({ type: LOG_OUT, payload: response.data })
-//   }
-// }
+export const LOG_OUT = 'LOG_OUT'
+export const logOut = () => {
+  return function (dispatch) {
+    const payload = false
+    localStorage.clear()
+    dispatch({ type: LOG_OUT, payload })
+  }
+}

@@ -1,4 +1,4 @@
-import { LOG_IN, CHECK_AUTH } from '../actions/authActions'
+import { LOG_IN, CHECK_AUTH, LOG_OUT } from '../actions/authActions'
 
 export default function authReducer (state = false, action) {
   switch (action.type) {
@@ -10,10 +10,10 @@ export default function authReducer (state = false, action) {
       const isUserAuth = action.payload
       return isUserAuth
     }
-    // case LISTS_GET: {
-    //   const list = [state, ...action.payload]
-    //   return list
-    // }
+    case LOG_OUT: {
+      const isUserAuth = action.payload
+      return isUserAuth
+    }
     default:
       return state
   }

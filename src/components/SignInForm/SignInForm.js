@@ -35,7 +35,7 @@ export default class SignInForm extends Component {
     const { pseudo, password, redirectToUserHome } = this.state
     const { handleChange, handleSubmit } = this
     if (redirectToUserHome === true) {
-      return (<Redirect to="/home/user"/>)
+      return (<Redirect to="/"/>)
     }
     return (
       <Container>
