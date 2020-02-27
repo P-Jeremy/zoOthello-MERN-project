@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import reversi from 'reversi/index'
 import { Button, Form, Container } from 'react-bootstrap'
+import './SearchBar.scss'
 
 import axios from 'axios'
 
@@ -75,7 +76,12 @@ export default class SearchBar extends Component {
                 opponents.length > 0 &&
                 <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center', zIndex: 1, border: '1px solid lightGrey', borderRadius: '3px' }}>
                   {
-                    opponents.map((opponent) => <li onClick={() => selectOption(opponent)} key={opponent._id}>{opponent.pseudo}</li>)
+                    opponents.map((opponent) => <li
+                      className='opponentsOptions'
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => selectOption(opponent)}
+                      key={opponent._id}>{opponent.pseudo}
+                    </li>)
                   }
                 </ul>
               }
