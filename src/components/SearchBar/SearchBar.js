@@ -62,7 +62,7 @@ export default class SearchBar extends Component {
       <div>
         <Container>
           <Form style={ { width: 25 + '%', margin: '3rem auto' }}>
-            <Form.Group controlId="pseudo">
+            <Form.Group style={{ position: 'relative', zIndex: 1 }} controlId="pseudo">
               <Form.Label>Nouvelle partie</Form.Label>
               <Form.Control
                 type="text"
@@ -74,7 +74,7 @@ export default class SearchBar extends Component {
               />
               {
                 opponents.length > 0 &&
-                <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center', zIndex: 1, border: '1px solid lightGrey', borderRadius: '3px' }}>
+                <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center', backgroundColor: 'white', border: '1px solid lightGrey', borderRadius: '3px' }}>
                   {
                     opponents.map((opponent) => <li
                       className='opponentsOptions'
@@ -86,13 +86,17 @@ export default class SearchBar extends Component {
                 </ul>
               }
             </Form.Group>
-            <Button
-              type="submit"
-              tabIndex={0}
-              variant="primary"
-              onClick={handleNewGame}>
+            <div
+              style={{ position: 'absolute', left: '0', right: '0', top: '13rem', zIndex: 0, width: '100%' }}
+            >
+              <Button
+                type="submit"
+                tabIndex={0}
+                variant="primary"
+                onClick={handleNewGame}>
               Créer
-            </Button>
+              </Button>
+            </div>
           </Form>
         </Container>
       </div>
