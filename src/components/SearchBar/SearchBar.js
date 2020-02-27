@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import reversi from 'reversi/index'
 import { Button, Form, Container } from 'react-bootstrap'
+
 import axios from 'axios'
 
 const uri = 'http://localhost:3000/api'
@@ -13,9 +14,6 @@ export default class SearchBar extends Component {
     opponents: []
   }
 
-  componentDidMount () {
-  }
-
   autoComplete () {
     const { opponent } = this.state
     axios.post(`${uri}/user/search`, { search: opponent })
@@ -26,9 +24,17 @@ export default class SearchBar extends Component {
       })
   }
 
+  selectOption = (selected) => {
+    this.setState({ opponent: selected.pseudo, opponents: [] })
+  }
+
   async handleChange (e) {
     const { name, value } = e.target
     await this.setState({ [name]: value })
+    const { opponent } = this.state
+    if (opponent.length === 0) {
+      return this.setState({ opponents: [] })
+    }
     this.autoComplete()
   }
 
@@ -42,8 +48,8 @@ export default class SearchBar extends Component {
   }
 
   render () {
-    const { opponent } = this.state
-    const { handleNewGame, handleChange } = this
+    const { opponent, opponents } = this.state
+    const { handleNewGame, handleChange, selectOption } = this
     return (
       <div>
         <Container>
@@ -58,6 +64,11 @@ export default class SearchBar extends Component {
                 className="text-muted"
                 placeholder="pseudo de votre adversaire"
               />
+              <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center' }}>
+                {
+                  opponents.length > 0 && opponents.map((opponent) => <li onClick={() => selectOption(opponent)} key={opponent._id}>{opponent.pseudo}</li>)
+                }
+              </ul>
             </Form.Group>
             <Button
               type="submit"
