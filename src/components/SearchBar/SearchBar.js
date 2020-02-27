@@ -50,9 +50,12 @@ export default class SearchBar extends Component {
  * Allows to start a new game
  */
   handleNewGame () {
-    const origin = 'new'
     const newGame = new Reversi()
-    axios.post(`${uri}/game`, { newGame, origin })
+    const { userId, opponentId } = this.state
+    axios.post(`${uri}/game`, { newGame, blackPlayer: userId, whitePlayer: opponentId })
+      .then((res) => {
+        console.log('NEWGAME', res)
+      })
   }
 
   render () {
@@ -61,7 +64,7 @@ export default class SearchBar extends Component {
     return (
       <div>
         <Container>
-          <Form style={ { width: 25 + '%', margin: '3rem auto' }}>
+          <Form style={ { width: 25 + '%', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
             <Form.Group style={{ position: 'relative', zIndex: 1 }} controlId="pseudo">
               <Form.Label>Nouvelle partie</Form.Label>
               <Form.Control
@@ -93,7 +96,7 @@ export default class SearchBar extends Component {
                 type="submit"
                 tabIndex={0}
                 variant="primary"
-                onClick={handleNewGame}>
+              >
               Créer
               </Button>
             </div>

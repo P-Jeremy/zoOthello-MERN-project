@@ -91,22 +91,26 @@ module.exports = class GameController {
 
   /** Add a game in DB */
   async addGame (req, res) {
-    const { newGame, blackPassCount, whitePassCount, origin, isTwice } = req.body
-    let payload
+    const { newGame, blackPlayer, whitePlayer } = req.body
+    // let payload
     try {
       const newGameToSave = new Game(
         {
           game: newGame,
-          blackPassCount: blackPassCount,
-          whitePassCount: whitePassCount
+          blackPassCount: 0,
+          whitePassCount: 0,
+          blackPlayer,
+          whitePlayer
         })
+      console.log('NEWGAME', newGameToSave)
+
       const result = await newGameToSave.save()
-      payload = socketMessage(origin, result)
-      const socketio = req.app.get('socketIo')
-      if (isTwice) {
-        payload = socketMessage(origin, isTwice)
-      }
-      socketio.sockets.emit('gameUpdated', payload)
+      // payload = socketMessage(origin, result)
+      // const socketio = req.app.get('socketIo')
+      // if (isTwice) {
+      //   payload = socketMessage(origin, isTwice)
+      // }
+      // socketio.sockets.emit('gameUpdated', payload)
       return res
         .status(200)
         .send(result)
