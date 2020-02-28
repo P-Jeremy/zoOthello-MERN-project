@@ -58,6 +58,21 @@ module.exports = class GameController {
     }
   };
 
+  async getUserGames (req, res) {
+    const { id } = req.params
+    try {
+      const results = await Game.find({ $or: [{ blackPlayer: id }, { whitePlayer: id }] })
+      return res
+        .status(200)
+        .json(results)
+        .end()
+    } catch (error) {
+      return res
+        .status(400)
+        .end()
+    }
+  };
+
   /** Get one game */
   async getGame (req, res) {
     const { id } = req.params
@@ -76,22 +91,25 @@ module.exports = class GameController {
 
   /** Add a game in DB */
   async addGame (req, res) {
-    const { newGame, blackPassCount, whitePassCount, origin, isTwice } = req.body
-    let payload
+    const { newGame, blackPlayer, whitePlayer } = req.body
+    // let payload
     try {
       const newGameToSave = new Game(
         {
           game: newGame,
-          blackPassCount: blackPassCount,
-          whitePassCount: whitePassCount
+          blackPassCount: 0,
+          whitePassCount: 0,
+          blackPlayer,
+          whitePlayer
         })
+
       const result = await newGameToSave.save()
-      payload = socketMessage(origin, result)
-      const socketio = req.app.get('socketIo')
-      if (isTwice) {
-        payload = socketMessage(origin, isTwice)
-      }
-      socketio.sockets.emit('gameUpdated', payload)
+      // payload = socketMessage(origin, result)
+      // const socketio = req.app.get('socketIo')
+      // if (isTwice) {
+      //   payload = socketMessage(origin, isTwice)
+      // }
+      // socketio.sockets.emit('gameUpdated', payload)
       return res
         .status(200)
         .send(result)
@@ -165,24 +183,6 @@ module.exports = class GameController {
   /** Delete a game in DB */
   delete (req, res) {
     const { id } = req.params
-    console.log('DELETE')
-
     Game.deleteOne({ _id: id }).then(() => res.status(200).end()).catch(() => res.status(403).end())
-
-    // try {
-    //   const gameToDelete = await Game.findOne({ _id: id })
-    //   const result = await Game.deleteOne({ _id: gameToDelete._id })
-    //   console.log('RESULT DELETE', result)
-
-    //   return res
-    //     .status(200)
-    //     .send(gameToDelete)
-    //     .end()
-    // } catch (error) {
-    //   return res
-    //     .status(400)
-    //     .json(error)
-    //     .end()
-    // }
   }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Game.scss'
 import { Button } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
+import PropTypes from 'prop-types'
 import Board from '../Board/Board'
 import merge from 'lodash.merge'
 import reversi from 'reversi/index'
@@ -35,18 +36,19 @@ export default class Game extends Component {
    * @returns game instance of data in state
    */
   turnDataInGameInstance = async (res) => {
-    if (!res.data.length) return
+    // if (!res.data.length) return
     const newGame = new Reversi()
-    const dbGame = res.data[0].game
+    const dbGame = res.data.game
+
     merge(newGame, dbGame)
-    const id = res.data[0]._id
+    const id = res.data._id
 
     await this.setState({
       id,
       nextPlayer: newGame._nextPieceType,
       game: newGame,
-      blackPassCount: res.data[0].blackPassCount,
-      whitePassCount: res.data[0].whitePassCount
+      blackPassCount: res.data.blackPassCount,
+      whitePassCount: res.data.whitePassCount
     })
     return this.countPoints()
   }
@@ -55,9 +57,11 @@ export default class Game extends Component {
    * FETCH GAME DATA FROM DB
    * And turn it into Game instance
    */
-  getGameData = () => {
-    axios.get(url).then(res => {
+  getGameData = (gameId) => {
+    axios.get(`${url}/one/${gameId}`).then(res => {
       if (res) {
+        console.log('GAME', res)
+
         this.turnDataInGameInstance(res)
       }
     })
@@ -95,7 +99,8 @@ export default class Game extends Component {
   }
 
   componentDidMount () {
-    this.getGameData()
+    const gameId = this.props.match.params.id
+    this.getGameData(gameId)
     document.title = 'Game'
     socket.on('gameUpdated', (payload) => {
       this.toaster(payload)
@@ -264,4 +269,8 @@ export default class Game extends Component {
       </div >
     )
   }
+}
+
+Game.propTypes = {
+  match: PropTypes.object
 }
