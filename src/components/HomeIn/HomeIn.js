@@ -29,8 +29,14 @@ export default class HomeIn extends Component {
       .catch(err => console.error(err))
   }
 
+  updateVue () {
+    const { userId } = this.state
+    this.getUsersGame(userId)
+  }
+
   render () {
     const { redirectToHome, games } = this.state
+    const { updateVue } = this
     if (redirectToHome) {
       return (<Redirect to="/"/>)
     }
@@ -40,7 +46,7 @@ export default class HomeIn extends Component {
         <Container className="gamesList">
           <ListGroup>
             {
-              games.length > 0 && games.map((game) => <GamesList key={game._id} game={game} />)
+              games.length > 0 && games.map((game) => <GamesList updateVue={updateVue.bind(this)} key={game._id} game={game} />)
             }
           </ListGroup>
         </Container>

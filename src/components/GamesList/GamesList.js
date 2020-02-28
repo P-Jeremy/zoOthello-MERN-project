@@ -12,8 +12,6 @@ class GamesList extends Component {
   }
 
   async componentDidMount () {
-    console.log('GAME', this.props.game)
-
     this.getOpponentName(this.props.game.whitePlayer)
   }
 
@@ -26,7 +24,7 @@ class GamesList extends Component {
   deleteGame () {
     const gameId = this.props.game._id
     axios.delete(`${uri}/game/delete/${gameId}`)
-      .then(() => this.forceUpdate())
+      .then(() => this.props.updateVue())
   }
 
   render () {
@@ -47,7 +45,8 @@ class GamesList extends Component {
 }
 
 GamesList.propTypes = {
-  game: PropTypes.object
+  game: PropTypes.object,
+  updateVue: PropTypes.func
 }
 
 export default GamesList

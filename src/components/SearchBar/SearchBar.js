@@ -54,8 +54,8 @@ export default class SearchBar extends Component {
     const newGame = new Reversi()
     const { userId, opponentId } = this.state
     axios.post(`${uri}/game`, { newGame, blackPlayer: userId, whitePlayer: opponentId })
-      .then((res) => {
-        console.log('NEWGAME', res)
+      .then(() => {
+        this.setState({ opponent: '' })
       })
   }
 
