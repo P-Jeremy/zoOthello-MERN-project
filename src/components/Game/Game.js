@@ -136,6 +136,10 @@ export default class Game extends Component {
     return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
   }
 
+  /**
+   * Check if the actual user is allowed to play
+   * @returns true or undefined
+   */
   isUserAllowedToPlay = () => {
     const userId = localStorage.getItem('userId')
     const { blackPlayer, game, whitePlayer } = this.state
@@ -198,42 +202,9 @@ export default class Game extends Component {
     return this.updateGame({ origin })
   }
 
-  /**
- * Allows to reset the game
- */
-  handleNewGame = async (playerHasPassedTwice) => {
-    const { id, blackPassCount, whitePassCount } = this.state
-    const origin = 'new'
-    const isTwice = playerHasPassedTwice === 'pass++' ? 'pass++' : null
-    const newGame = new Reversi()
-    /* IF NO GAME CREATE A NEW ONE */
-    if (id === null) {
-      const res = await axios.post(url, { newGame, origin })
-      return this.setState(
-        {
-          game: res.data.game,
-          nextPlayer: res.data.game._nextPieceType,
-          blackPassCount: 0,
-          whitePassCount: 0
-        })
-    }
-    /* ELSE CLEAR THE EXISTING ONE */
-    return axios.put(`${url}/newGame/${id}`, { newGame, whitePassCount: 0, blackPassCount: 0, origin, isTwice })
-      .then((res) => this.setState(
-        {
-          id: res.data._id,
-          game: newGame,
-          nextPlayer: newGame._nextPieceType,
-          blackPassCount,
-          whitePassCount,
-          score: null
-        }))
-      .catch(err => err)
-  }
-
   render () {
-    const { nextPlayer, score, game, id, blackPlayer, whitePlayer } = this.state
-    const { handleNewGame, handleClick, handlePass } = this
+    const { nextPlayer, score, game, blackPlayer, whitePlayer } = this.state
+    const { handleClick, handlePass } = this
     return (
       <div className="game" >
         {
@@ -249,26 +220,6 @@ export default class Game extends Component {
                 `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS
                 ${whitePlayer.pseudo}: ${score === null ? 2 : score.WHITE} points `
               }
-            </span>
-          </>
-        }
-        {game !== null && game.isEnded && <h2>{`Le joueur ${game.getHighScorer() === 'BLACK' ? 'noir' : 'blanc'} a gagné !`}</h2>}
-        <section>
-          <aside className="aside_left">
-            <Button
-              tabIndex={0}
-              variant={id === null ? 'primary' : 'danger'}
-              onClick={handleNewGame}>
-              Nouvelle partie
-            </Button>
-          </aside>
-          {
-            game !== null &&
-            <Board click={handleClick} board={game._board} />
-          }
-          {
-            game !== null &&
-            <aside className="aside_right">
               <div className="pass">
                 <span className="draggable" draggable>
                   <Pawn color={nextPlayer.toLowerCase()} />
@@ -279,7 +230,14 @@ export default class Game extends Component {
                   Passer
                 </Button>
               </div>
-            </aside>
+            </span>
+          </>
+        }
+        {game !== null && game.isEnded && <h2>{`Le joueur ${game.getHighScorer() === 'BLACK' ? 'noir' : 'blanc'} a gagné !`}</h2>}
+        <section>
+          {
+            game !== null &&
+            <Board click={handleClick} board={game._board} />
           }
         </section>
       </div >
