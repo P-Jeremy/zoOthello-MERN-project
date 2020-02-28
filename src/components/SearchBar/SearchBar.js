@@ -23,10 +23,11 @@ export default class SearchBar extends Component {
   }
 
   autoComplete () {
-    const { opponent } = this.state
+    const { opponent, userId } = this.state
     axios.post(`${uri}/user/search`, { search: opponent })
       .then(res => {
-        this.setState({ opponents: res.data.fetchedUsers })
+        const filteredRes = res.data.fetchedUsers.filter((opponent) => opponent._id !== userId)
+        this.setState({ opponents: filteredRes })
       })
   }
 
@@ -64,7 +65,7 @@ export default class SearchBar extends Component {
     return (
       <div>
         <Container>
-          <Form style={ { width: 25 + '%', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
+          <Form autoComplete="off" style={ { width: 25 + '%', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
             <Form.Group style={{ position: 'relative', zIndex: 1 }} controlId="pseudo">
               <Form.Label>Nouvelle partie</Form.Label>
               <Form.Control

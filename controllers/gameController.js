@@ -102,7 +102,6 @@ module.exports = class GameController {
           blackPlayer,
           whitePlayer
         })
-      console.log('NEWGAME', newGameToSave)
 
       const result = await newGameToSave.save()
       // payload = socketMessage(origin, result)
@@ -184,24 +183,6 @@ module.exports = class GameController {
   /** Delete a game in DB */
   delete (req, res) {
     const { id } = req.params
-    console.log('DELETE')
-
     Game.deleteOne({ _id: id }).then(() => res.status(200).end()).catch(() => res.status(403).end())
-
-    // try {
-    //   const gameToDelete = await Game.findOne({ _id: id })
-    //   const result = await Game.deleteOne({ _id: gameToDelete._id })
-    //   console.log('RESULT DELETE', result)
-
-    //   return res
-    //     .status(200)
-    //     .send(gameToDelete)
-    //     .end()
-    // } catch (error) {
-    //   return res
-    //     .status(400)
-    //     .json(error)
-    //     .end()
-    // }
   }
 }
