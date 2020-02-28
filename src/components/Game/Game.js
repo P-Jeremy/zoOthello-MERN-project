@@ -25,9 +25,11 @@ export default class Game extends Component {
     game: null,
     nextPlayer: 'BLACK',
     score: null,
-    id: null,
+    gameId: null,
     blackPassCount: 0,
-    whitePassCount: 0
+    whitePassCount: 0,
+    blackPlayer: {},
+    whitePlayer: {}
   }
 
   /** MERGE THE RESULT FROM DB INTO A NEW GAME INSTANCE
@@ -38,18 +40,20 @@ export default class Game extends Component {
   turnDataInGameInstance = async (res) => {
     // if (!res.data.length) return
     const newGame = new Reversi()
-    const dbGame = res.data.game
-
+    const dbGame = res.data.gameData.game
     merge(newGame, dbGame)
-    const id = res.data._id
+    const gameId = res.data.gameData._id
 
     await this.setState({
-      id,
+      gameId,
       nextPlayer: newGame._nextPieceType,
       game: newGame,
-      blackPassCount: res.data.blackPassCount,
-      whitePassCount: res.data.whitePassCount
+      blackPassCount: res.data.gameData.blackPassCount,
+      whitePassCount: res.data.gameData.whitePassCount,
+      blackPlayer: res.data.blackPlayerData,
+      whitePlayer: res.data.whitePlayerData
     })
+
     return this.countPoints()
   }
 
@@ -60,8 +64,6 @@ export default class Game extends Component {
   getGameData = (gameId) => {
     axios.get(`${url}/one/${gameId}`).then(res => {
       if (res) {
-        console.log('GAME', res)
-
         this.turnDataInGameInstance(res)
       }
     })
@@ -104,7 +106,7 @@ export default class Game extends Component {
     document.title = 'Game'
     socket.on('gameUpdated', (payload) => {
       this.toaster(payload)
-      this.getGameData()
+      this.getGameData(gameId)
     })
   }
 
@@ -124,14 +126,26 @@ export default class Game extends Component {
    * Update the game in DB
    */
   updateGame = ({ origin }) => {
-    const { id, game, blackPassCount, whitePassCount } = this.state
-    axios.put(`${url}/${id}`, {
+    const { gameId, game, blackPassCount, whitePassCount } = this.state
+    axios.put(`${url}/${gameId}`, {
       whitePassCount,
       blackPassCount,
       game,
       origin
     })
     return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
+  }
+
+  isUserAllowedToPlay = () => {
+    const userId = localStorage.getItem('userId')
+    const { blackPlayer, game, whitePlayer } = this.state
+    if (game._nextPieceType === 'BLACK') {
+      if (userId === blackPlayer._id) { return true }
+    } else if (game._nextPieceType === 'WHITE') {
+      if (userId === whitePlayer._id) { return true }
+    } else {
+      return false
+    }
   }
 
   /**
@@ -142,6 +156,7 @@ export default class Game extends Component {
   handleClick = (x, y) => {
     const { game } = this.state
     toast.dismiss()
+    if (!this.isUserAllowedToPlay()) return
     /* CHECK IF THE MOVE IS LEGAL */
     const report = game.proceed(x, y)
     /* RETURNS IF ILLEGAL MOVE */
@@ -157,6 +172,7 @@ export default class Game extends Component {
    */
   handlePass = async () => {
     let { game, blackPassCount, whitePassCount, nextPlayer } = this.state
+    if (!this.isUserAllowedToPlay()) return
     let origin
     switch (game._nextPieceType) {
       case 'BLACK':
@@ -216,7 +232,7 @@ export default class Game extends Component {
   }
 
   render () {
-    const { nextPlayer, score, game, id } = this.state
+    const { nextPlayer, score, game, id, blackPlayer, whitePlayer } = this.state
     const { handleNewGame, handleClick, handlePass } = this
     return (
       <div className="game" >
@@ -230,8 +246,8 @@ export default class Game extends Component {
             <h2>{`Joueur: ${nextPlayer === 'WHITE' ? 'Blanc' : 'Noir'}`}</h2>
             <span>
               {
-                `Noir: ${score === null ? 2 : score.BLACK} points VS
-                Blanc: ${score === null ? 2 : score.WHITE} points `
+                `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS
+                ${whitePlayer.pseudo}: ${score === null ? 2 : score.WHITE} points `
               }
             </span>
           </>
