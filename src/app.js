@@ -46,9 +46,7 @@ class App extends Component {
                   !loggedIn && <HomeOut/>
                 }
               </Route>
-              <Route path="/game">
-                <Game />
-              </Route>
+              <Route path="/game/:id" component={Game}/>
               <Route path="/connexion">
                 <SignInContainer/>
               </Route>

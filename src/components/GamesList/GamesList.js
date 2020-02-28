@@ -28,13 +28,14 @@ class GamesList extends Component {
   }
 
   render () {
+    const { game } = this.props
     const { opponent } = this.state
     const { deleteGame } = this
     return (
       <>
         {
           opponent.length > 0 &&
-            <ListGroup.Item className="gamesListItem" href="#link1">
+            <ListGroup.Item className="gamesListItem" action href={`/game/${game._id}`}>
               <span>Partie en cours contre {`${opponent}`}</span>
               <Button variant="danger" onClick={deleteGame.bind(this)}>Supprimer</Button>
             </ListGroup.Item>
