@@ -1,4 +1,5 @@
 const Game = require('../models/Game')
+const User = require('../models/User')
 
 /**
  * Allows to create a payload for the websoacket
@@ -77,10 +78,13 @@ module.exports = class GameController {
   async getGame (req, res) {
     const { id } = req.params
     try {
-      const result = await Game.findOne({ _id: id })
+      const gameData = await Game.findOne({ _id: id })
+      const blackPlayerData = await User.findOne({ _id: gameData.blackPlayer }).select('-email')
+      const whitePlayerData = await User.findOne({ _id: gameData.whitePlayer }).select('-email')
+
       return res
         .status(200)
-        .json(result)
+        .json({ gameData, blackPlayerData, whitePlayerData })
         .end()
     } catch (error) {
       return res
