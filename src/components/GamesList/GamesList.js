@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ListGroup } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
@@ -20,11 +21,13 @@ class GamesList extends Component {
   }
 
   render () {
-    const { game } = this.props
     const { opponent } = this.state
     return (
       <>
-        <li key={game._id}>Partie en cours contre {`${opponent}`}</li>
+        {
+          opponent.length > 0 &&
+            <ListGroup.Item action href="#link1">Partie en cours contre {`${opponent}`}</ListGroup.Item>
+        }
       </>
     )
   }

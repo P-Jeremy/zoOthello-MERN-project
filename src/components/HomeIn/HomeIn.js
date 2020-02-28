@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import { Container, ListGroup } from 'react-bootstrap'
 import axios from 'axios'
 import SearchBar from '../SearchBar/SearchBar'
 import GamesList from '../GamesList/GamesList'
+import './HomeIn.scss'
 
 const uri = 'http://localhost:3000/api'
 
@@ -35,11 +37,13 @@ export default class HomeIn extends Component {
     return (
       <div>
         <SearchBar/>
-        <ul>
-          {
-            games.length > 0 && games.map((game) => <GamesList key={game._id} game={game} />)
-          }
-        </ul>
+        <Container className="gamesList">
+          <ListGroup>
+            {
+              games.length > 0 && games.map((game) => <GamesList key={game._id} game={game} />)
+            }
+          </ListGroup>
+        </Container>
       </div>
     )
   }
