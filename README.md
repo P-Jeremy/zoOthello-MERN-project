@@ -1,4 +1,4 @@
-# React Webpack Express Boilerplate 
+# MERN Othello 
 
 ---
 
@@ -6,7 +6,7 @@
 
 ## Important
 
-This project is a boilerplate of a React app using webpack babel and express
+This project is an Othello Game using react (no CRA), express && mongoose
 
 ## Install
 
