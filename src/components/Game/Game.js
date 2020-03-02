@@ -146,12 +146,12 @@ export default class Game extends Component {
     const { blackPlayer, game, whitePlayer } = this.state
     if (game._nextPieceType === 'BLACK') {
       if (userId === blackPlayer._id) { return true } else {
-        toast.error('Attendez votre tour...')
+        toast.error('AttendS ton tour...coin-coin')
         return false
       }
     } else if (game._nextPieceType === 'WHITE') {
       if (userId === whitePlayer._id) { return true } else {
-        toast.error('Attendez votre tour...')
+        toast.error('Attends ton tour...coin-coin')
         return false
       }
     }

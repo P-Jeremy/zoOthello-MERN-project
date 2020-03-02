@@ -5,7 +5,7 @@ export default class HomeOut extends Component {
   render () {
     return (
       <div className="homeOut">
-        <h2>Just like othello, but the &apos;z&apos; way</h2>
+        <h2>Just like othello, but with a dash of &apos;Z&apos;</h2>
         <table>
           <tbody>
             <tr>
