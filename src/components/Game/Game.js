@@ -85,7 +85,7 @@ export default class Game extends Component {
         toast.info('Nouvelle partie')
         break
       case 'move':
-        toast.info(`Le joueur ${payload.player} a joué: ${hour}h${minute}m${seconds}`)
+        toast.info(`${payload.player} a joué: ${hour}h${minute}m${seconds}`)
         break
       case 'pass':
         toast.warn(`Le joueur ${payload.player} a passé`)
@@ -125,13 +125,14 @@ export default class Game extends Component {
   /**
    * Update the game in DB
    */
-  updateGame = ({ origin }) => {
+  updateGame = ({ origin, player }) => {
     const { gameId, game, blackPassCount, whitePassCount } = this.state
     axios.put(`${url}/${gameId}`, {
       whitePassCount,
       blackPassCount,
       game,
-      origin
+      origin,
+      player
     })
     return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
   }
@@ -144,11 +145,15 @@ export default class Game extends Component {
     const userId = localStorage.getItem('userId')
     const { blackPlayer, game, whitePlayer } = this.state
     if (game._nextPieceType === 'BLACK') {
-      if (userId === blackPlayer._id) { return true }
+      if (userId === blackPlayer._id) { return true } else {
+        toast.error('AttendS ton tour...coin-coin')
+        return false
+      }
     } else if (game._nextPieceType === 'WHITE') {
-      if (userId === whitePlayer._id) { return true }
-    } else {
-      return false
+      if (userId === whitePlayer._id) { return true } else {
+        toast.error('Attends ton tour...coin-coin')
+        return false
+      }
     }
   }
 
@@ -158,7 +163,7 @@ export default class Game extends Component {
  * @param {*} y pawn Y coordinate
  */
   handleClick = (x, y) => {
-    const { game } = this.state
+    const { game, blackPlayer, whitePlayer } = this.state
     toast.dismiss()
     if (!this.isUserAllowedToPlay()) return
     /* CHECK IF THE MOVE IS LEGAL */
@@ -167,7 +172,7 @@ export default class Game extends Component {
     if (!report.isSuccess) {
       return
     }
-    this.updateGame({ origin: 'move' })
+    this.updateGame({ origin: 'move', player: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo })
     return this.countPoints()
   }
 
@@ -211,10 +216,9 @@ export default class Game extends Component {
           game !== null && !game._isEnded &&
           <ToastContainer autoClose={false} />
         }
-        < h1 > Othello</h1 >
         {game !== null && !game._isEnded &&
           <>
-            <h2>{`Joueur: ${nextPlayer === 'WHITE' ? 'Blanc' : 'Noir'}`}</h2>
+            <h2>{`A ${nextPlayer === 'WHITE' ? whitePlayer.pseudo : blackPlayer.pseudo} de jouer !`}</h2>
             <span>
               {
                 `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS
@@ -226,6 +230,7 @@ export default class Game extends Component {
                 </span>
                 <Button
                   tabIndex={0}
+                  variant="danger"
                   onClick={handlePass}>
                   Passer
                 </Button>

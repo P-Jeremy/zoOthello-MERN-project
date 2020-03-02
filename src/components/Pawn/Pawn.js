@@ -5,7 +5,12 @@ import './Pawn.scss'
 
 export default function Pawn ({ color }) {
   return (
-    <div className={`pawn ${color}`} />
+    <>
+      {
+        color !== '' &&
+        <img className="duckFace" src={`./assets/img/duck-${color === 'black' ? 'red' : 'yellow'}.png`}/>
+      }
+    </>
   )
 }
 

@@ -67,7 +67,7 @@ export default class SearchBar extends Component {
         <Container>
           <Form autoComplete="off" style={ { width: 25 + '%', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
             <Form.Group style={{ position: 'relative', zIndex: 1 }} controlId="pseudo">
-              <Form.Label>Nouvelle partie</Form.Label>
+              <Form.Label>Nouvelle partie :</Form.Label>
               <Form.Control
                 type="text"
                 onChange={handleChange.bind(this)}
@@ -96,7 +96,7 @@ export default class SearchBar extends Component {
               <Button
                 type="submit"
                 tabIndex={0}
-                variant="primary"
+                variant="dark"
               >
               Créer
               </Button>

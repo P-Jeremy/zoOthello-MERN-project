@@ -1,4 +1,9 @@
 .gamesListItem {
+  max-width: 50%;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  span {
+    align-items: center;
+  }
 }
