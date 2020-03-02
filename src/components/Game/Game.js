@@ -144,11 +144,15 @@ export default class Game extends Component {
     const userId = localStorage.getItem('userId')
     const { blackPlayer, game, whitePlayer } = this.state
     if (game._nextPieceType === 'BLACK') {
-      if (userId === blackPlayer._id) { return true }
+      if (userId === blackPlayer._id) { return true } else {
+        toast.error('Attendez votre tour...')
+        return false
+      }
     } else if (game._nextPieceType === 'WHITE') {
-      if (userId === whitePlayer._id) { return true }
-    } else {
-      return false
+      if (userId === whitePlayer._id) { return true } else {
+        toast.error('Attendez votre tour...')
+        return false
+      }
     }
   }
 

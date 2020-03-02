@@ -16,7 +16,7 @@ export default function Square ({ value, click, rowI, colI }) {
       case 'WHITE':
         return (<Pawn color={'white'} />)
       case 'BLANK':
-        return (<Pawn />)
+        return (<Pawn color="" />)
       default:
         break
     }
@@ -48,7 +48,8 @@ export default function Square ({ value, click, rowI, colI }) {
     e.preventDefault()
   }
 
-  const handlePawnDrop = (x, y) => {
+  const handlePawnDrop = (e, x, y) => {
+    e.stopPropagation()
     return click(x, y)
   }
 
@@ -57,14 +58,14 @@ export default function Square ({ value, click, rowI, colI }) {
       className="zoom"
       tabIndex={0}
       onKeyPress={(e) => handleEnter(e, rowI, colI)}
-      onClick={() => handleClick(rowI, colI)}>
+    >
       <div
         tabIndex={-1}
         className="square"
         onKeyPress={(e) => handleEnter(e, rowI, colI)}
         onClick={() => handleClick(rowI, colI)}
         onDragOver={handleDragOver}
-        onDrop={() => handlePawnDrop(rowI, colI)}
+        onDrop={(e) => handlePawnDrop(e, rowI, colI)}
       >
         {returnPawn(value)}
       </div>
