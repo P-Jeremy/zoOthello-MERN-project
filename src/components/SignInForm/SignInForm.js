@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Button, Card, Container } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import '../../app.scss'
 
 export default class SignInForm extends Component {
   state = {
@@ -41,7 +42,7 @@ export default class SignInForm extends Component {
       <div style={{ margin: '3rem' }}>
         <Container>
           <h2>Connexion</h2>
-          <Card style={ { width: 50 + '%', margin: '3rem auto', padding: '2rem' }}>
+          <Card className="forms">
             <Form onSubmit={handleSubmit.bind(this)}>
               <Form.Group controlId="formBasicPseudo">
                 <Form.Label>Pseudo</Form.Label>
