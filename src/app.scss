@@ -1,3 +1,21 @@
 .App {
   text-align: center;
 }
+
+.forms { 
+  width: 50%;
+  margin: 3rem auto;
+  padding: 2rem
+}
+
+@media only screen and (min-width:768px) {
+  .forms {
+    width: 80%
+  }
+}
+
+@media only screen and (min-width:0px) and (max-width:767px) {
+  .forms {
+    width:100%
+  }
+}

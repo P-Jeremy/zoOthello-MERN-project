@@ -12,7 +12,9 @@ class GamesList extends Component {
   }
 
   async componentDidMount () {
-    this.getOpponentName(this.props.game.whitePlayer)
+    const userId = localStorage.getItem('userId')
+    const opponentId = userId === this.props.game.whitePlayer ? this.props.game.blackPlayer : this.props.game.whitePlayer
+    this.getOpponentName(opponentId)
   }
 
   getOpponentName = async (opponentId) => {
@@ -35,8 +37,8 @@ class GamesList extends Component {
       <>
         {
           opponent.length > 0 &&
-            <ListGroup.Item className="gamesListItem" action href={`/game/${game._id}`}>
-              <span>Partie en cours contre {`${opponent}`}</span>
+            <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${game._id}`}>
+              <span>Vous vs {`${opponent}`}</span>
               <Button variant="danger" onClick={deleteGame.bind(this)}>Supprimer</Button>
             </ListGroup.Item>
         }

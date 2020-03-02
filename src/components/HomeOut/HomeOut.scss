@@ -1,0 +1,26 @@
+.homeOut {
+  margin: 3rem auto;
+  table {
+    margin: 3rem auto;
+    width: 20rem;
+    height: 20rem;
+    box-shadow: 10px 5px 5px black;
+    img {
+      width: 5rem;
+    }
+    tr, th{
+      border: 1px solid black;
+    }
+  }
+
+  @media only screen and (min-width:0px) and (max-width:550px) {
+    table {
+      width: 15rem;
+      height: 15rem;
+      img {
+        width: 2.5rem;
+      }
+    }
+  }
+}
+
