@@ -37,8 +37,8 @@ class GamesList extends Component {
       <>
         {
           opponent.length > 0 &&
-            <ListGroup.Item className="gamesListItem" action href={`/game/${game._id}`}>
-              <span>Partie en cours contre {`${opponent}`}</span>
+            <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${game._id}`}>
+              <span>Vous vs {`${opponent}`}</span>
               <Button variant="danger" onClick={deleteGame.bind(this)}>Supprimer</Button>
             </ListGroup.Item>
         }
