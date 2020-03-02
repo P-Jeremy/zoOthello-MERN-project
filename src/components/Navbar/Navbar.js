@@ -38,8 +38,8 @@ export default class NavbarOthello extends Component {
             {
               !userAuthenticated &&
               <>
-                <Nav.Link href="/connexion">Connexion</Nav.Link>
-                <Nav.Link eventKey={2} href="/inscription">
+                <Nav.Link style={{ backgroundColor: '#464646', borderRadius: '5px', color: 'white', margin: '1rem' }} href="/connexion">Connexion</Nav.Link>
+                <Nav.Link style={{ backgroundColor: '#464646', borderRadius: '5px', color: 'white', margin: '1rem' }} eventKey={2} href="/inscription">
                   Inscription
                 </Nav.Link>
               </>

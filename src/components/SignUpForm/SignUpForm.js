@@ -56,7 +56,7 @@ export default class SignUpForm extends Component {
                 <Form.Label>Mot de passe</Form.Label>
                 <Form.Control onChange={handleChange.bind(this)} name="passwordBis" value={passwordBis} type="password" placeholder="Confirmer mot de passe" />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="secondary" type="submit">
               Valider
               </Button>
             </Form>

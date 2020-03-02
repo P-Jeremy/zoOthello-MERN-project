@@ -10,13 +10,6 @@ const User = require('../models/User')
 const socketMessage = (origin, game) => {
   let data
   switch (origin) {
-    case 'move':
-      data = {
-        origin,
-        player: `${game._nextPieceType === 'BLACK' ? 'blanc' : 'noir'}`,
-        newMove: true
-      }
-      return data
     case 'pass':
       data = {
         origin,
@@ -62,7 +55,7 @@ module.exports = class GameController {
   async getUserGames (req, res) {
     const { id } = req.params
     try {
-      const results = await Game.find({ $or: [{ blackPlayer: id }, { whitePlayer: id }] })
+      const results = await Game.find().or([{ blackPlayer: id }, { whitePlayer: id }])
       return res
         .status(200)
         .json(results)
@@ -128,7 +121,7 @@ module.exports = class GameController {
   async updateGame (req, res) {
     const { id } = req.params
 
-    const { game, blackPassCount, whitePassCount, origin } = req.body
+    const { game, blackPassCount, whitePassCount, origin, player } = req.body
     try {
       const result = await Game.findOneAndUpdate({ _id: id }, {
         $set:
@@ -140,8 +133,13 @@ module.exports = class GameController {
       },
       { new: true }
       )
-      const payload = socketMessage(origin, game)
+      const payload = {
+        origin,
+        player,
+        newMove: true
+      }
       const socketio = req.app.get('socketIo')
+
       socketio.sockets.emit('gameUpdated', payload)
 
       return res

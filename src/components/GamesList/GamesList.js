@@ -12,7 +12,9 @@ class GamesList extends Component {
   }
 
   async componentDidMount () {
-    this.getOpponentName(this.props.game.whitePlayer)
+    const userId = localStorage.getItem('userId')
+    const opponentId = userId === this.props.game.whitePlayer ? this.props.game.blackPlayer : this.props.game.whitePlayer
+    this.getOpponentName(opponentId)
   }
 
   getOpponentName = async (opponentId) => {

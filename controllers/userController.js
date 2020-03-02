@@ -42,10 +42,14 @@ module.exports = class UserController {
       })
     }
     try {
+      console.log(fetchedUser)
+
       const allowedUser = await bcrypt.compare(
         req.body.password,
         fetchedUser.password
       )
+      console.log(allowedUser)
+
       if (allowedUser) {
         return res.status(200).json({ fetchedUser })
       }

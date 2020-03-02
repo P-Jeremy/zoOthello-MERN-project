@@ -51,7 +51,7 @@ export default class SignInForm extends Component {
                 <Form.Label>Mot de passe</Form.Label>
                 <Form.Control onChange={handleChange.bind(this)} name="password" value={password} type="password" placeholder="Mot de passe" />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="secondary" type="submit">
               Valider
               </Button>
             </Form>

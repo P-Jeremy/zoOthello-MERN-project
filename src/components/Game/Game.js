@@ -85,7 +85,7 @@ export default class Game extends Component {
         toast.info('Nouvelle partie')
         break
       case 'move':
-        toast.info(`Le joueur ${payload.player} a joué: ${hour}h${minute}m${seconds}`)
+        toast.info(`${payload.player} a joué: ${hour}h${minute}m${seconds}`)
         break
       case 'pass':
         toast.warn(`Le joueur ${payload.player} a passé`)
@@ -125,13 +125,14 @@ export default class Game extends Component {
   /**
    * Update the game in DB
    */
-  updateGame = ({ origin }) => {
+  updateGame = ({ origin, player }) => {
     const { gameId, game, blackPassCount, whitePassCount } = this.state
     axios.put(`${url}/${gameId}`, {
       whitePassCount,
       blackPassCount,
       game,
-      origin
+      origin,
+      player
     })
     return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
   }
@@ -162,7 +163,7 @@ export default class Game extends Component {
  * @param {*} y pawn Y coordinate
  */
   handleClick = (x, y) => {
-    const { game } = this.state
+    const { game, blackPlayer, whitePlayer } = this.state
     toast.dismiss()
     if (!this.isUserAllowedToPlay()) return
     /* CHECK IF THE MOVE IS LEGAL */
@@ -171,7 +172,7 @@ export default class Game extends Component {
     if (!report.isSuccess) {
       return
     }
-    this.updateGame({ origin: 'move' })
+    this.updateGame({ origin: 'move', player: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo })
     return this.countPoints()
   }
 
@@ -215,10 +216,9 @@ export default class Game extends Component {
           game !== null && !game._isEnded &&
           <ToastContainer autoClose={false} />
         }
-        < h1 > zOthello</h1 >
         {game !== null && !game._isEnded &&
           <>
-            <h2>{`Tour: ${nextPlayer === 'WHITE' ? whitePlayer.pseudo : blackPlayer.pseudo}`}</h2>
+            <h2>{`A ${nextPlayer === 'WHITE' ? whitePlayer.pseudo : blackPlayer.pseudo} de jouer !`}</h2>
             <span>
               {
                 `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS
