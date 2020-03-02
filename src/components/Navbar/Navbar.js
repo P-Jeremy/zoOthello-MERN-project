@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Navbar, Nav, Button } from 'react-bootstrap'
+import { Navbar, Nav, Button, NavItem } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import './Navbar.scss'
 
 export default class NavbarOthello extends Component {
   state ={
@@ -23,14 +24,16 @@ export default class NavbarOthello extends Component {
     const { onLogOut } = this
 
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/">Othello</Navbar.Brand>
+      <Navbar collapseOnSelect expand="lg" className="nav-zRed" variant="dark" >
+        <Navbar.Brand href="/">zOthello</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav>
+          <Nav className="ml-auto">
             {
               userAuthenticated &&
-            <Button onClick={onLogOut.bind(this)}>Se déconnecter</Button>
+              <NavItem>
+                <Button className="logOut" variant="danger" onClick={onLogOut.bind(this)}>Se déconnecter</Button>
+              </NavItem>
             }
             {
               !userAuthenticated &&

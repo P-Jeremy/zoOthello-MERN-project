@@ -215,10 +215,10 @@ export default class Game extends Component {
           game !== null && !game._isEnded &&
           <ToastContainer autoClose={false} />
         }
-        < h1 > Othello</h1 >
+        < h1 > zOthello</h1 >
         {game !== null && !game._isEnded &&
           <>
-            <h2>{`Joueur: ${nextPlayer === 'WHITE' ? 'Blanc' : 'Noir'}`}</h2>
+            <h2>{`Tour: ${nextPlayer === 'WHITE' ? whitePlayer.pseudo : blackPlayer.pseudo}`}</h2>
             <span>
               {
                 `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS
@@ -230,6 +230,7 @@ export default class Game extends Component {
                 </span>
                 <Button
                   tabIndex={0}
+                  variant="danger"
                   onClick={handlePass}>
                   Passer
                 </Button>
