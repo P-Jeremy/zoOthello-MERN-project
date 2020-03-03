@@ -6,7 +6,7 @@ const UserController = require('../controllers/userController')
 const controller = new UserController()
 
 /** SEARCH USERS CORRESPONDING DU FORM INPUT */
-router.post('/search', controller.searchUser)
+router.post('/search', controller.searchUsers)
 
 /** ADD A USER */
 router.post('/', controller.addUser)
