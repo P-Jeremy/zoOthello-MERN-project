@@ -1,12 +1,21 @@
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 
+const validPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
+
 module.exports = class UserController {
   async addUser (req, res) {
     const { email, pseudo, password } = req.body
+
+    if (!password.match(validPassword)) res.status(409).json({ message: 'password' })
+
     const hash = await bcrypt.hash(password, 10)
-    const foundUser = await User.findOne({ pseudo: pseudo })
-    if (foundUser) res.status(403).json({ message: 'User alread exists' })
+    const foundUserByPseudo = await User.findOne({ pseudo: pseudo })
+    const foundUserByEmail = await User.findOne({ email: email })
+
+    if (foundUserByEmail) res.status(409).json({ message: 'email' })
+    if (foundUserByPseudo) res.status(409).json({ message: 'pseudo' })
+
     try {
       const newUser = new User({
         email,
@@ -20,7 +29,7 @@ module.exports = class UserController {
     }
   }
 
-  async searchUser (req, res, next) {
+  async searchUsers (req, res, next) {
     const { search } = req.body
     const userRegex = new RegExp('^' + search, 'i')
     const fetchedUsers = await User.find({ pseudo: { $regex: userRegex } })
