@@ -28,15 +28,15 @@ describe('Square', () => {
   })
 
   it('should render one pawn', () => {
-    expect(renderer.find('.pawn')).toHaveLength(1)
+    expect(renderer.find('img')).toHaveLength(1)
   })
 
-  it('should render one pawn with className "white"', () => {
-    expect(renderer.find('.white')).toHaveLength(1)
+  it('should render one pawn with className "yellow"', () => {
+    expect(renderer.find('.yellow')).toHaveLength(1)
   })
 
-  it('should render one pawn with className "black" on props value={"BLACK"}', () => {
+  it('should render one pawn with className "red" on props value={"BLACK"}', () => {
     renderer.setProps({ value: 'BLACK' })
-    expect(renderer.find('.black')).toHaveLength(1)
+    expect(renderer.find('.red')).toHaveLength(1)
   })
 })

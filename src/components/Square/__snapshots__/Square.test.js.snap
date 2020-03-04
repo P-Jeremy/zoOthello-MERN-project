@@ -3,7 +3,6 @@
 exports[`Square Basic rendering 1`] = `
 <div
   className="zoom"
-  onClick={[Function]}
   onKeyPress={[Function]}
   tabIndex={0}
 >
@@ -15,8 +14,9 @@ exports[`Square Basic rendering 1`] = `
     onKeyPress={[Function]}
     tabIndex={-1}
   >
-    <div
-      className="pawn white"
+    <img
+      className="duckFace yellow"
+      src="./assets/img/duck-yellow.png"
     />
   </div>
 </div>
