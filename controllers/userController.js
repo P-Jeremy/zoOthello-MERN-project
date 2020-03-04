@@ -2,12 +2,14 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 
 const validPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
+const validPseudo = /^[a-z0-9_-]{3,15}$/gm
 
 module.exports = class UserController {
   async addUser (req, res) {
     const { email, pseudo, password } = req.body
 
     if (!password.match(validPassword)) res.status(409).json({ message: 'password' })
+    if (!pseudo.match(validPseudo)) res.status(409).json({ message: 'invalidPseudo' })
 
     const hash = await bcrypt.hash(password, 10)
     const foundUserByPseudo = await User.findOne({ pseudo: pseudo })
@@ -47,20 +49,20 @@ module.exports = class UserController {
     const fetchedUser = await User.findOne({ pseudo: req.body.pseudo })
     if (!fetchedUser) {
       return res.status(403).json({
-        message: "User doesn't"
+        message: "User doesn't exist"
       })
     }
     try {
-      console.log(fetchedUser)
-
       const allowedUser = await bcrypt.compare(
         req.body.password,
         fetchedUser.password
       )
-      console.log(allowedUser)
-
       if (allowedUser) {
         return res.status(200).json({ fetchedUser })
+      } else {
+        return res.status(403).json({
+          message: "User doesn't"
+        })
       }
     } catch (error) {
       return res.status(500).json(

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const uri = 'http://localhost:3000/api/user'
 
@@ -13,13 +14,20 @@ export const checkAuth = () => {
 export const LOG_IN = 'LOG_IN'
 export const logIn = (user) => {
   return async function (dispatch) {
-    const res = await axios.post(`${uri}/signIn`, user)
     let payload = false
-    if (res.status === 200) {
-      payload = true
-      localStorage.setItem('userId', res.data.fetchedUser._id)
-      localStorage.setItem('loggedIn', true)
-    }
+    await axios.post(`${uri}/signIn`, user)
+      .then((res) => {
+        if (res.status === 200) {
+          payload = true
+          localStorage.setItem('userId', res.data.fetchedUser._id)
+          localStorage.setItem('loggedIn', true)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          toast.error('Verifiez vos identifiants')
+        }
+      })
     dispatch({ type: LOG_IN, payload })
   }
 }

@@ -5,7 +5,8 @@ import './Navbar.scss'
 
 export default class NavbarOthello extends Component {
   state ={
-    userAuthenticated: false
+    userAuthenticated: false,
+    collapsed: true
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
@@ -15,16 +16,17 @@ export default class NavbarOthello extends Component {
   }
 
   onLogOut () {
+    this.setState({ collapsed: false })
     this.props.logOut()
     window.location.href = '/'
   }
 
   render () {
-    const { userAuthenticated } = this.state
+    const { userAuthenticated, collapsed } = this.state
     const { onLogOut } = this
 
     return (
-      <Navbar collapseOnSelect expand="lg" className="nav-zRed" variant="dark" >
+      <Navbar collapseOnSelect={collapsed} expand="lg" className="nav-zRed" variant="dark" >
         <Navbar.Brand href="/">zoOthello</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

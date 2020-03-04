@@ -7,28 +7,39 @@ const User = require('../models/User')
  * @param {*} game data of the current game
  * @returns a payload
  */
-const socketMessage = (origin, game) => {
+const socketMessage = (origin, game, player) => {
   let data
   switch (origin) {
+    case 'move':
+      data = {
+        origin,
+        player: player,
+        newMove: true,
+        id: game._id
+      }
+      return data
     case 'pass':
       data = {
         origin,
-        player: `${game._nextPieceType === 'BLACK' ? 'blanc' : 'noir'}`,
-        newMove: false
+        player: player,
+        newMove: false,
+        id: game._id
       }
       return data
     case 'pass++':
       data = {
         origin,
-        player: `${game._nextPieceType === 'BLACK' ? 'blanc' : 'noir'}`,
-        newMove: false
+        player: player,
+        newMove: false,
+        id: game._id
       }
       return data
     case 'new':
       data = {
         origin,
-        player: `${game._nextPieceType === 'BLACK' ? 'blanc' : 'noir'}`,
-        newMove: false
+        player: player,
+        newMove: false,
+        id: game._id
       }
       return data
     default:
@@ -72,8 +83,8 @@ module.exports = class GameController {
     const { id } = req.params
     try {
       const gameData = await Game.findOne({ _id: id })
-      const blackPlayerData = await User.findOne({ _id: gameData.blackPlayer }).select('-email')
-      const whitePlayerData = await User.findOne({ _id: gameData.whitePlayer }).select('-email')
+      const blackPlayerData = await User.findOne({ _id: gameData.blackPlayer }).select('-email -password')
+      const whitePlayerData = await User.findOne({ _id: gameData.whitePlayer }).select('-email -password')
 
       return res
         .status(200)
@@ -101,12 +112,6 @@ module.exports = class GameController {
         })
 
       const result = await newGameToSave.save()
-      // payload = socketMessage(origin, result)
-      // const socketio = req.app.get('socketIo')
-      // if (isTwice) {
-      //   payload = socketMessage(origin, isTwice)
-      // }
-      // socketio.sockets.emit('gameUpdated', payload)
       return res
         .status(200)
         .send(result)
@@ -122,6 +127,7 @@ module.exports = class GameController {
     const { id } = req.params
 
     const { game, blackPassCount, whitePassCount, origin, player } = req.body
+
     try {
       const result = await Game.findOneAndUpdate({ _id: id }, {
         $set:
@@ -133,11 +139,8 @@ module.exports = class GameController {
       },
       { new: true }
       )
-      const payload = {
-        origin,
-        player,
-        newMove: true
-      }
+      const payload = socketMessage(origin, result, player)
+
       const socketio = req.app.get('socketIo')
 
       socketio.sockets.emit('gameUpdated', payload)
@@ -157,17 +160,18 @@ module.exports = class GameController {
   /** Upsert a game in DB */
   async newGame (req, res) {
     const { id } = req.params
-    const { newGame, whitePassCount, blackPassCount, origin, isTwice } = req.body
+    const { newGame, whitePassCount, blackPassCount, blackPlayer, whitePlayer, origin, isTwice, player } = req.body
+
     let payload
     try {
       const result = await Game.findOneAndUpdate({ _id: id },
-        { $set: { game: newGame, whitePassCount, blackPassCount } },
+        { $set: { game: newGame, whitePassCount, blackPassCount, blackPlayer, whitePlayer } },
         { new: true }
       )
       payload = socketMessage(origin, result)
       const socketio = req.app.get('socketIo')
       if (isTwice !== null) {
-        payload = socketMessage(isTwice, result)
+        payload = socketMessage(isTwice, result, player)
       }
       socketio.sockets.emit('gameUpdated', payload)
       return res

@@ -1,7 +1,8 @@
 const authErrors = Object.freeze({
   email: 'email',
   pseudo: 'pseudo',
-  password: 'password'
+  password: 'password',
+  invalidPseudo: 'invalidPseudo'
 })
 
 module.exports = { authErrors }
