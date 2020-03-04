@@ -91,7 +91,7 @@ export default class SearchBar extends Component {
               }
             </Form.Group>
             <div
-              style={{ position: 'absolute', left: '0', right: '0', top: '6rem', zIndex: 0, width: '100%' }}
+              style={{ position: 'absolute', left: '0', right: '0', top: '5rem', zIndex: 0, width: '100%' }}
             >
               <Button
                 type="submit"
