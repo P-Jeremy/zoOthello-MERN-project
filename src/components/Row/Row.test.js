@@ -48,8 +48,8 @@ describe('Row', () => {
     expect(result).toMatchSnapshot()
   })
 
-  it('should render two black pawns after move', () => {
+  it('should render two red ducks after move', () => {
     renderer.setProps({ col: colAfterBlackMove })
-    expect(renderer.find('.black')).toHaveLength(2)
+    expect(renderer.find('.red')).toHaveLength(2)
   })
 })

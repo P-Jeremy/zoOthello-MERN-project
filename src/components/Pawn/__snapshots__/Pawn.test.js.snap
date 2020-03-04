@@ -1,13 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Pawn Basic rendering 1`] = `
-<div
-  className="pawn black"
+<img
+  className="duckFace red"
+  src="./assets/img/duck-red.png"
 />
 `;
 
-exports[`Pawn Should change "black" className to white on props change 1`] = `
-<div
-  className="pawn white"
+exports[`Pawn Should change "yellow" className to white on props change 1`] = `
+<img
+  className="duckFace yellow"
+  src="./assets/img/duck-yellow.png"
 />
 `;

@@ -16,18 +16,18 @@ describe('Pawn', () => {
     expect(result).toMatchSnapshot()
   })
 
-  it('Should have "black" as a className', () => {
+  it('Should have "red" as a className', () => {
     const instance = renderer.root
-    const element = instance.findByType('div')
-    expect(element.props.className.includes('black')).toBe(true)
+    const element = instance.findByType('img')
+    expect(element.props.className.includes('red')).toBe(true)
   })
 
-  it('Should change "black" className to white on props change', () => {
+  it('Should change "yellow" className to white on props change', () => {
     renderer.update(<Pawn color={'white'}/>)
     const instance = renderer.root
-    const element = instance.findByType('div')
+    const element = instance.findByType('img')
     const result = renderer.toJSON()
     expect(result).toMatchSnapshot()
-    expect(element.props.className.includes('white')).toBe(true)
+    expect(element.props.className.includes('yellow')).toBe(true)
   })
 })

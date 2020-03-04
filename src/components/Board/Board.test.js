@@ -37,10 +37,10 @@ describe('Board', () => {
   })
 
   it('Board has 2 black pawns', () => {
-    expect(renderer.find('.black')).toHaveLength(2)
+    expect(renderer.find('.red')).toHaveLength(2)
   })
 
   it('Board has 2 white pawns', () => {
-    expect(renderer.find('.white')).toHaveLength(2)
+    expect(renderer.find('.yellow')).toHaveLength(2)
   })
 })
