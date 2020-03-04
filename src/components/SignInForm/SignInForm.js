@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Button, Card, Container } from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import '../../app.scss'
@@ -40,6 +41,7 @@ export default class SignInForm extends Component {
     }
     return (
       <div style={{ margin: '3rem' }}>
+        <ToastContainer autoClose={false} />
         <Container>
           <h2>Connexion</h2>
           <Card className="forms">

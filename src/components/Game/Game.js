@@ -100,8 +100,18 @@ export default class Game extends Component {
     }
   }
 
+  isUserAuth () {
+    const userId = localStorage.getItem('userId')
+    return userId
+  }
+
+  goHome () {
+    window.location.href = '/'
+  }
+
   componentDidMount () {
     const gameId = this.props.match.params.id
+    if (!this.isUserAuth()) this.goHome()
     this.getGameData(gameId)
     document.title = 'Game'
     socket.on('gameUpdated', (payload) => {

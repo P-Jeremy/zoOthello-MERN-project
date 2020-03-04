@@ -72,8 +72,8 @@ module.exports = class GameController {
     const { id } = req.params
     try {
       const gameData = await Game.findOne({ _id: id })
-      const blackPlayerData = await User.findOne({ _id: gameData.blackPlayer }).select('-email')
-      const whitePlayerData = await User.findOne({ _id: gameData.whitePlayer }).select('-email')
+      const blackPlayerData = await User.findOne({ _id: gameData.blackPlayer }).select('-email -password')
+      const whitePlayerData = await User.findOne({ _id: gameData.whitePlayer }).select('-email -password')
 
       return res
         .status(200)
