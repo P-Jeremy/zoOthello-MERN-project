@@ -266,9 +266,26 @@ handleNewGame = async (playerHasPassedTwice) => {
     .catch(err => err)
 }
 
+getTurnUserName = () => {
+  const userId = localStorage.getItem('userId')
+  const { whitePlayer, blackPlayer, nextPlayer } = this.state
+  let name = ''
+  switch (nextPlayer) {
+    case 'WHITE':
+      name = userId === whitePlayer._id ? 'toi' : whitePlayer.pseudo
+      return name
+    case 'BLACK':
+      name = userId === blackPlayer._id ? 'toi' : blackPlayer.pseudo
+      return name
+    default:
+      break
+  }
+}
+
 render () {
   const { nextPlayer, score, game, blackPlayer, whitePlayer } = this.state
-  const { handleClick, handlePass } = this
+  const { handleClick, handlePass, getTurnUserName } = this
+
   return (
     <div className="game" >
       {
@@ -277,7 +294,7 @@ render () {
       }
       {game !== null && !game._isEnded &&
           <>
-            <h2>{`A ${nextPlayer === 'WHITE' ? whitePlayer.pseudo : blackPlayer.pseudo} de jouer !`}</h2>
+            <h2>{`A ${getTurnUserName()} de jouer !`}</h2>
             <span>
               {
                 `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS

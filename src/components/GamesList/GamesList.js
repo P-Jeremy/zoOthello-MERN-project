@@ -8,37 +8,57 @@ const uri = 'http://localhost:3000/api'
 
 class GamesList extends Component {
   state = {
-    opponent: ''
+    opponent: { _id: '', pseudo: '' },
+    isCurrentPlayerTurn: false
   }
 
   async componentDidMount () {
     const userId = localStorage.getItem('userId')
-    const opponentId = userId === this.props.game.whitePlayer ? this.props.game.blackPlayer : this.props.game.whitePlayer
-    this.getOpponentName(opponentId)
+    const opponentId = userId === this.props.gameData.whitePlayer ? this.props.gameData.blackPlayer : this.props.gameData.whitePlayer
+    this.getOpponent(opponentId)
+    const isItUserTurn = this.getCurrentGameTurn(userId)
+    await this.setState({ isCurrentPlayerTurn: isItUserTurn })
   }
 
-  getOpponentName = async (opponentId) => {
+  getOpponent = async (opponentId) => {
     const user = await axios.get(`${uri}/user/${opponentId}`)
-    const pseudo = user.data.fetchedUsers[0].pseudo
-    await this.setState({ opponent: pseudo })
+    const result = user.data.fetchedUsers[0]
+    await this.setState({ opponent: result })
+  }
+
+  getCurrentGameTurn = id => {
+    let isUserTurn = false
+    const { gameData } = this.props
+    const { blackPlayer, whitePlayer, game } = gameData
+    switch (game._nextPieceType) {
+      case 'WHITE':
+        isUserTurn = id === whitePlayer
+        return isUserTurn
+      case 'BLACK':
+        isUserTurn = id === blackPlayer
+        return isUserTurn
+      default:
+        break
+    }
   }
 
   deleteGame () {
-    const gameId = this.props.game._id
+    const gameId = this.props.gameData._id
     axios.delete(`${uri}/game/delete/${gameId}`)
       .then(() => this.props.updateVue())
   }
 
   render () {
-    const { game } = this.props
-    const { opponent } = this.state
+    const { gameData } = this.props
+    const { opponent, isCurrentPlayerTurn } = this.state
     const { deleteGame } = this
     return (
       <>
         {
-          opponent.length > 0 &&
-            <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${game._id}`}>
-              <span>Vous vs {`${opponent}`}</span>
+          opponent.pseudo.length > 0 &&
+            <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${gameData._id}`}>
+              <span>Toi vs {`${opponent.pseudo} ${isCurrentPlayerTurn ? '(à ton tour)' : ''}`}</span>
+
               <Button variant="danger" onClick={deleteGame.bind(this)}>Supprimer</Button>
             </ListGroup.Item>
         }
@@ -48,7 +68,7 @@ class GamesList extends Component {
 }
 
 GamesList.propTypes = {
-  game: PropTypes.object,
+  gameData: PropTypes.object,
   updateVue: PropTypes.func
 }
 

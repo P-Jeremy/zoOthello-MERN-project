@@ -65,8 +65,8 @@ export default class SearchBar extends Component {
     return (
       <div>
         <Container>
-          <Form autoComplete="off" style={ { position: 'relative', width: 25 + '%', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
-            <Form.Group style={{ position: 'relative', zIndex: 1 }} controlId="pseudo">
+          <Form autoComplete="off" style={ { position: 'relative', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
+            <Form.Group style={{ position: 'relative', zIndex: 1, width: '15rem', margin: '0 auto' }} controlId="pseudo">
               <Form.Label>Nouvelle partie :</Form.Label>
               <Form.Control
                 type="text"
