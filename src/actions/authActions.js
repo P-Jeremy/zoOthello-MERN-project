@@ -13,9 +13,9 @@ export const checkAuth = () => {
 
 export const LOG_IN = 'LOG_IN'
 export const logIn = (user) => {
-  return function (dispatch) {
+  return async function (dispatch) {
     let payload = false
-    axios.post(`${uri}/signIn`, user)
+    await axios.post(`${uri}/signIn`, user)
       .then((res) => {
         if (res.status === 200) {
           payload = true
@@ -25,7 +25,6 @@ export const logIn = (user) => {
       })
       .catch((err) => {
         if (err.response.status === 403) {
-          payload = false
           toast.error('Verifiez vos identifiants')
         }
       })
