@@ -51,7 +51,6 @@ export default class HomeIn extends Component {
     return (
       <Container className="gamesList">
         <SearchBar/>
-        <div className="spacer"></div>
         <ListGroup>
           {
             games.length > 0 &&
