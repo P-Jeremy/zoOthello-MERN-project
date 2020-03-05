@@ -1,9 +1,30 @@
+
+.listItem {
+  position: relative;
+  margin: 0 auto;
+  width: 35rem;
+  .deleteBtn {
+    position: absolute;
+    top: 0.40rem;
+    right: 2rem;
+    z-index: 1000;
+    margin: 0;
+  }
+}
+
 .gamesListItem {
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  z-index: 0;
   span {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width:0px) and (max-width:767px) {
+  .listItem {
+    width: 19rem;
   }
 }

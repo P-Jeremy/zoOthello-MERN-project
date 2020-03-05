@@ -29,7 +29,8 @@ export default class Game extends Component {
     blackPassCount: 0,
     whitePassCount: 0,
     blackPlayer: {},
-    whitePlayer: {}
+    whitePlayer: {},
+    currentPlayer: ''
   }
 
   /** MERGE THE RESULT FROM DB INTO A NEW GAME INSTANCE
@@ -51,7 +52,8 @@ export default class Game extends Component {
       blackPassCount: res.data.gameData.blackPassCount,
       whitePassCount: res.data.gameData.whitePassCount,
       blackPlayer: res.data.blackPlayerData,
-      whitePlayer: res.data.whitePlayerData
+      whitePlayer: res.data.whitePlayerData,
+      currentPlayer: res.data.currentPlayer
     })
 
     return this.countPoints()

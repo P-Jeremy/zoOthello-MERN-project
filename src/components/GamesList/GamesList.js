@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { ListGroup, Button } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import './GamesList.scss'
@@ -9,37 +12,27 @@ const uri = 'http://localhost:3000/api'
 class GamesList extends Component {
   state = {
     opponent: { _id: '', pseudo: '' },
-    isCurrentPlayerTurn: false
+    userId: '',
+    currentPlayerId: ''
+  }
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const { gameData } = nextProps
+    const currentPlayer = gameData.currentPlayer
+    return currentPlayer === { currentPlayerId: prevState } ? { currentPlayerId: prevState } : { currentPlayerId: currentPlayer }
   }
 
   async componentDidMount () {
     const userId = localStorage.getItem('userId')
     const opponentId = userId === this.props.gameData.whitePlayer ? this.props.gameData.blackPlayer : this.props.gameData.whitePlayer
     this.getOpponent(opponentId)
-    const isItUserTurn = this.getCurrentGameTurn(userId)
-    await this.setState({ isCurrentPlayerTurn: isItUserTurn })
+    await this.setState({ currentPlayerId: this.props.gameData.currentPlayer, userId })
   }
 
   getOpponent = async (opponentId) => {
     const user = await axios.get(`${uri}/user/${opponentId}`)
     const result = user.data.fetchedUsers[0]
     await this.setState({ opponent: result })
-  }
-
-  getCurrentGameTurn = id => {
-    let isUserTurn = false
-    const { gameData } = this.props
-    const { blackPlayer, whitePlayer, game } = gameData
-    switch (game._nextPieceType) {
-      case 'WHITE':
-        isUserTurn = id === whitePlayer
-        return isUserTurn
-      case 'BLACK':
-        isUserTurn = id === blackPlayer
-        return isUserTurn
-      default:
-        break
-    }
   }
 
   deleteGame () {
@@ -50,17 +43,21 @@ class GamesList extends Component {
 
   render () {
     const { gameData } = this.props
-    const { opponent, isCurrentPlayerTurn } = this.state
+    const { opponent, currentPlayerId, userId } = this.state
     const { deleteGame } = this
     return (
       <>
         {
           opponent.pseudo.length > 0 &&
+          <div className= "listItem">
             <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${gameData._id}`}>
-              <span>Toi vs {`${opponent.pseudo} ${isCurrentPlayerTurn ? '(à ton tour)' : ''}`}</span>
-
-              <Button variant="danger" onClick={deleteGame.bind(this)}>Supprimer</Button>
+              <span>Toi vs {`${opponent.pseudo} ${currentPlayerId === userId ? '(à ton tour)' : ''}`}
+              </span>
             </ListGroup.Item>
+            <Button variant="danger" className="deleteBtn" onClick={deleteGame.bind(this)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </div>
         }
       </>
     )

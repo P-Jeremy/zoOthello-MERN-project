@@ -27,16 +27,13 @@ export default class HomeIn extends Component {
     this.getUsersGame(user)
     this.setState({ userId: user })
     socket.on('gameUpdated', () => {
-      console.log('COUCOU')
       this.updateVue()
     })
   }
 
   getUsersGame (id) {
     axios.get(`${uri}/game/user/${id}`)
-      .then(res => this.setState({ games: res.data }, () => {
-        alert('state')
-      }))
+      .then(res => this.setState({ games: res.data }))
       .catch(err => console.error(err))
   }
 
@@ -52,20 +49,19 @@ export default class HomeIn extends Component {
       return (<Redirect to="/"/>)
     }
     return (
-      <div>
+      <Container className="gamesList">
         <SearchBar/>
-        <Container className="gamesList">
-          <ListGroup>
-            {
-              games.length > 0 &&
+        <div className="spacer"></div>
+        <ListGroup>
+          {
+            games.length > 0 &&
               <div>
                 <h3>Partie(s) en cours</h3>
                 {games.map((game) => <GamesList updateVue={updateVue.bind(this)} key={game._id} gameData={game} />)}
               </div>
-            }
-          </ListGroup>
-        </Container>
-      </div>
+          }
+        </ListGroup>
+      </Container>
     )
   }
 }
