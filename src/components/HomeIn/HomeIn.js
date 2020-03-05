@@ -4,7 +4,12 @@ import { Container, ListGroup } from 'react-bootstrap'
 import axios from 'axios'
 import SearchBar from '../SearchBar/SearchBar'
 import GamesList from '../GamesList/GamesList'
+import openSocket from 'socket.io-client'
 import './HomeIn.scss'
+
+const socketUrl = 'http://localhost:3000'
+
+const socket = openSocket(socketUrl)
 
 const uri = 'http://localhost:3000/api'
 
@@ -20,7 +25,10 @@ export default class HomeIn extends Component {
     const user = localStorage.getItem('userId')
     if (!isUserAllowed) this.setState({ redirectToHome: true })
     this.getUsersGame(user)
-    return this.setState({ userId: user })
+    this.setState({ userId: user })
+    socket.on('gameUpdated', () => {
+      this.updateVue()
+    })
   }
 
   getUsersGame (id) {
@@ -41,20 +49,18 @@ export default class HomeIn extends Component {
       return (<Redirect to="/"/>)
     }
     return (
-      <div>
+      <Container className="gamesList">
         <SearchBar/>
-        <Container className="gamesList">
-          <ListGroup>
-            {
-              games.length > 0 &&
+        <ListGroup>
+          {
+            games.length > 0 &&
               <div>
                 <h3>Partie(s) en cours</h3>
-                {games.map((game) => <GamesList updateVue={updateVue.bind(this)} key={game._id} game={game} />)}
+                {games.map((game) => <GamesList updateVue={updateVue.bind(this)} key={game._id} gameData={game} />)}
               </div>
-            }
-          </ListGroup>
-        </Container>
-      </div>
+          }
+        </ListGroup>
+      </Container>
     )
   }
 }

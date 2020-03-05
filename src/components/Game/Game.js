@@ -29,7 +29,8 @@ export default class Game extends Component {
     blackPassCount: 0,
     whitePassCount: 0,
     blackPlayer: {},
-    whitePlayer: {}
+    whitePlayer: {},
+    currentPlayer: ''
   }
 
   /** MERGE THE RESULT FROM DB INTO A NEW GAME INSTANCE
@@ -51,7 +52,8 @@ export default class Game extends Component {
       blackPassCount: res.data.gameData.blackPassCount,
       whitePassCount: res.data.gameData.whitePassCount,
       blackPlayer: res.data.blackPlayerData,
-      whitePlayer: res.data.whitePlayerData
+      whitePlayer: res.data.whitePlayerData,
+      currentPlayer: res.data.currentPlayer
     })
 
     return this.countPoints()
@@ -266,9 +268,26 @@ handleNewGame = async (playerHasPassedTwice) => {
     .catch(err => err)
 }
 
+getTurnUserName = () => {
+  const userId = localStorage.getItem('userId')
+  const { whitePlayer, blackPlayer, nextPlayer } = this.state
+  let name = ''
+  switch (nextPlayer) {
+    case 'WHITE':
+      name = userId === whitePlayer._id ? 'toi' : whitePlayer.pseudo
+      return name
+    case 'BLACK':
+      name = userId === blackPlayer._id ? 'toi' : blackPlayer.pseudo
+      return name
+    default:
+      break
+  }
+}
+
 render () {
   const { nextPlayer, score, game, blackPlayer, whitePlayer } = this.state
-  const { handleClick, handlePass } = this
+  const { handleClick, handlePass, getTurnUserName } = this
+
   return (
     <div className="game" >
       {
@@ -277,7 +296,7 @@ render () {
       }
       {game !== null && !game._isEnded &&
           <>
-            <h2>{`A ${nextPlayer === 'WHITE' ? whitePlayer.pseudo : blackPlayer.pseudo} de jouer !`}</h2>
+            <h2>{`A ${getTurnUserName()} de jouer !`}</h2>
             <span>
               {
                 `${blackPlayer.pseudo}: ${score === null ? 2 : score.BLACK} points VS

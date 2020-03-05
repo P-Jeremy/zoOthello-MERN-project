@@ -100,6 +100,7 @@ module.exports = class GameController {
   /** Add a game in DB */
   async addGame (req, res) {
     const { newGame, blackPlayer, whitePlayer } = req.body
+
     // let payload
     try {
       const newGameToSave = new Game(
@@ -108,7 +109,8 @@ module.exports = class GameController {
           blackPassCount: 0,
           whitePassCount: 0,
           blackPlayer,
-          whitePlayer
+          whitePlayer,
+          currentPlayer: blackPlayer
         })
 
       const result = await newGameToSave.save()
@@ -127,6 +129,11 @@ module.exports = class GameController {
     const { id } = req.params
 
     const { game, blackPassCount, whitePassCount, origin, player } = req.body
+    const currentGame = await Game.findById(id)
+
+    const newCurrentPlayer = String(currentGame.currentPlayer) === String(currentGame.blackPlayer)
+      ? currentGame.whitePlayer
+      : currentGame.blackPlayer
 
     try {
       const result = await Game.findOneAndUpdate({ _id: id }, {
@@ -134,7 +141,8 @@ module.exports = class GameController {
         {
           game: game,
           whitePassCount: whitePassCount,
-          blackPassCount: blackPassCount
+          blackPassCount: blackPassCount,
+          currentPlayer: newCurrentPlayer
         }
       },
       { new: true }
@@ -165,7 +173,7 @@ module.exports = class GameController {
     let payload
     try {
       const result = await Game.findOneAndUpdate({ _id: id },
-        { $set: { game: newGame, whitePassCount, blackPassCount, blackPlayer, whitePlayer } },
+        { $set: { game: newGame, whitePassCount, blackPassCount, blackPlayer, whitePlayer, currentPlayer: blackPlayer } },
         { new: true }
       )
       payload = socketMessage(origin, result)
