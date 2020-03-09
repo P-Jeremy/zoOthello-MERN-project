@@ -35,6 +35,7 @@ Your '.env' file should contain an environemnt variable that looks like this :
 
  MONGO_CONFIG_URL='mongodb+srv://(PUTYOURUSERNAMEHERE):(PUTYOURPASSWORDHERE)@cluster0-ctrcz.mongodb.net/test?retryWrites=true&w=majority'
 
+
 ## Prerequisites
 
 - npm 6.13.6
