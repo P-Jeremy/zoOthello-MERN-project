@@ -75,12 +75,10 @@ export default class Game extends Component {
   /**
    * Allows to create a toaster message depending on the provided payload and
    * @param {*} payload payload provided by the socket
-   * @param {*} player actual player
    * @returns a toast() implementation with corresponding message
    */
-  toaster (payload, player) {
+  toaster (payload) {
     if (payload.id !== this.state.gameId) return false
-
     const hour = new Date().getHours()
     const minute = new Date().getMinutes()
     const seconds = new Date().getSeconds()
@@ -104,20 +102,24 @@ export default class Game extends Component {
     }
   }
 
+  /** Check if there is a userId in localstorage
+   * @returns the user ID or false
+   */
   isUserAuth () {
     const userId = localStorage.getItem('userId')
-    return userId
+    return userId || false
   }
 
+  /** Redirect to home */
   goHome () {
     window.location.href = '/'
   }
 
   componentDidMount () {
+    document.title = 'Game'
     const gameId = this.props.match.params.id
     if (!this.isUserAuth()) this.goHome()
     this.getGameData(gameId)
-    document.title = 'Game'
     socket.on('gameUpdated', (payload) => {
       this.toaster(payload)
       this.getGameData(gameId)
@@ -153,21 +155,32 @@ export default class Game extends Component {
 
   /**
    * Check if the actual user is allowed to play
-   * @returns true or undefined
+   * @returns true or false
    */
   isUserAllowedToPlay = () => {
     const userId = localStorage.getItem('userId')
+    const wrongUser = () => {
+      toast.error('Attends ton tour...coin-coin')
+      return false
+    }
     const { blackPlayer, game, whitePlayer } = this.state
-    if (game._nextPieceType === 'BLACK') {
-      if (userId === blackPlayer._id) { return true } else {
-        toast.error('AttendS ton tour...coin-coin')
-        return false
-      }
-    } else if (game._nextPieceType === 'WHITE') {
-      if (userId === whitePlayer._id) { return true } else {
-        toast.error('Attends ton tour...coin-coin')
-        return false
-      }
+    switch (game._nextPieceType) {
+      case 'BLACK':
+        if (userId === blackPlayer._id) {
+          return true
+        } else {
+          wrongUser()
+        }
+        break
+      case 'WHITE':
+        if (userId === whitePlayer._id) {
+          return true
+        } else {
+          wrongUser()
+        }
+        break
+      default:
+        break
     }
   }
 
@@ -268,6 +281,9 @@ handleNewGame = async (playerHasPassedTwice) => {
     .catch(err => err)
 }
 
+/**
+ * Allows to know if "YOU" or the opponent pseudo should be displayed
+ */
 getTurnUserName = () => {
   const userId = localStorage.getItem('userId')
   const { whitePlayer, blackPlayer, nextPlayer } = this.state

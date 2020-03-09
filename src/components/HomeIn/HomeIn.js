@@ -31,12 +31,20 @@ export default class HomeIn extends Component {
     })
   }
 
+  /**
+   * Allows to get all games played by the user
+   * @param {} id
+   * @returns a setSate with the result array
+   */
   getUsersGame (id) {
-    axios.get(`${uri}/game/user/${id}`)
+    return axios.get(`${uri}/game/user/${id}`)
       .then(res => this.setState({ games: res.data }))
       .catch(err => console.error(err))
   }
 
+  /**
+   * Allows the child component to triggers a new axios get
+   */
   updateVue () {
     const { userId } = this.state
     this.getUsersGame(userId)
