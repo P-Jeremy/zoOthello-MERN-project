@@ -80,9 +80,9 @@ npm run lint
 
 👤 **Jérémy Pluquet**
 
-* Twitter: [@\_Jeremy\_p\_](https://twitter.com/\_Jeremy\_p\_)
+* Twitter: [@\_Jeremy\_p\_](https://twitter.com/_Jeremy_p_)
 * Github: [@D0C702WH0](https://github.com/D0C702WH0)
-* LinkedIn: [@jérémy pluquet](https://linkedin.com/in/jérémy pluquet)
+* LinkedIn: [@jérémy pluquet](https://www.linkedin.com/in/j%C3%A9r%C3%A9my-pluquet-765a89169/)
 
 ## Show your support
 
@@ -91,7 +91,7 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2020 [Jérémy Pluquet](https://github.com/D0C702WH0).<br />
-This project is [ISC](https://github.com/D0C702WH0/MERN-Othello-Game-noCRA/blob/master/LICENSE) licensed.
+This project is [ISC](https://www.isc.org/licenses/) licensed.
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
