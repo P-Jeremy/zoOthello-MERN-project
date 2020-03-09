@@ -25,6 +25,16 @@
 
 > A react(no CRA)/Express/mongoDB Othello game
 
+## Important
+
+For the game to work, you'll need a MongoDB Atlas data base.
+
+Store your atlas config in a '.env' file in the root folder.
+
+Your '.env' file should contain an environemnt variable that looks like this :
+
+ MONGO_CONFIG_URL='mongodb+srv://<USERNAME>:<PASSWORD>@cluster0-ctrcz.mongodb.net/test?retryWrites=true&w=majority'
+
 ## Prerequisites
 
 - npm 6.13.6
