@@ -18,8 +18,8 @@
   <a href="https://github.com/D0C702WH0/MERN-Othello-Game-noCRA/blob/master/LICENSE" target="_blank">
     <img alt="License: ISC" src="https://img.shields.io/github/license/D0C702WH0/zoOthello" />
   </a>
-  <a href="https://twitter.com/\_Jeremy\_p\_" target="_blank">
-    <img alt="Twitter: \_jeremy\_p\_" src="https://img.shields.io/twitter/follow/\_jeremy\_p\_.svg?style=social" />
+  <a href="https://twitter.com/_jeremy_p_" target="_blank">
+    <img alt="Twitter: _jeremy_p_" src="https://img.shields.io/twitter/follow/_jeremy_p_.svg?style=social" />
   </a>
 </p>
 
