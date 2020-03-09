@@ -19,7 +19,7 @@
     <img alt="License: ISC" src="https://img.shields.io/github/license/D0C702WH0/zoOthello" />
   </a>
   <a href="https://twitter.com/\_Jeremy\_p\_" target="_blank">
-    <img alt="Twitter: \_Jeremy\_p\_" src="https://img.shields.io/twitter/follow/\_Jeremy\_p\_.svg?style=social" />
+    <img alt="Twitter: \_jeremy\_p\_" src="https://img.shields.io/twitter/follow/\_jeremy\_p\_.svg?style=social" />
   </a>
 </p>
 
