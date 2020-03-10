@@ -1,15 +1,11 @@
-import 'jsdom-global/register'
 import React from 'react'
-import TestRenderer from 'react-test-renderer'
-import { configure, mount } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import Row from './Row'
 import reversi from 'reversi'
 
 const GameGameInstance = reversi.Game
 const game = new GameGameInstance()
-
-configure({ adapter: new Adapter() })
 
 const col = game._board._squares[4]
 const colAfterBlackMove = [
@@ -24,9 +20,9 @@ const colAfterBlackMove = [
 ]
 
 const click = jest.fn()
-let renderer
+let wrapper
 beforeEach(() => {
-  renderer = mount(
+  wrapper = render(
     <Row
       col={col}
       click={click} />
@@ -35,21 +31,22 @@ beforeEach(() => {
 
 describe('Row', () => {
   it('Basic rendering', () => {
-    const renderer = TestRenderer.create(
-      <Row click={click} col={col}/>)
-    const result = renderer.toJSON()
-    expect(result).toMatchSnapshot()
-  })
-
-  it('Rendering after black move', () => {
-    const renderer = TestRenderer.create(
-      <Row click={click} col={colAfterBlackMove}/>)
-    const result = renderer.toJSON()
-    expect(result).toMatchSnapshot()
+    const { asFragment } = wrapper
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it('should render two red ducks after move', () => {
-    renderer.setProps({ col: colAfterBlackMove })
-    expect(renderer.find('.red')).toHaveLength(2)
+    const { queryAllByTestId, rerender } = wrapper
+    let initialBlackPawns = queryAllByTestId('test-pawn-red')
+    let initialWhitePawns = queryAllByTestId('test-pawn-yellow')
+    expect(initialBlackPawns).toHaveLength(1)
+    expect(initialWhitePawns).toHaveLength(1)
+
+    rerender(<Row col={colAfterBlackMove} />)
+
+    initialBlackPawns = queryAllByTestId('test-pawn-red')
+    initialWhitePawns = queryAllByTestId('test-pawn-yellow')
+    expect(initialBlackPawns).toHaveLength(2)
+    expect(initialWhitePawns).toHaveLength(1)
   })
 })

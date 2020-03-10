@@ -8,7 +8,7 @@ export default function Pawn ({ color }) {
     <>
       {
         color !== '' &&
-        <img alt="duck pawn" data-testid={'test-pawn'} className={`duckFace ${color === 'black' ? 'red' : 'yellow'}`} src={`./assets/img/duck-${color === 'black' ? 'red' : 'yellow'}.png`}/>
+        <img alt="duck pawn" data-testid={`test-pawn-${color === 'black' ? 'red' : 'yellow'}`} className={`duckFace ${color === 'black' ? 'red' : 'yellow'}`} src={`./assets/img/duck-${color === 'black' ? 'red' : 'yellow'}.png`}/>
       }
     </>
   )

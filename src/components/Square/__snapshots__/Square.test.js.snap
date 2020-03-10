@@ -13,7 +13,7 @@ exports[`Square Basic rendering 1`] = `
       <img
         alt="duck pawn"
         class="duckFace yellow"
-        data-testid="test-pawn"
+        data-testid="test-pawn-yellow"
         src="./assets/img/duck-yellow.png"
       />
     </div>

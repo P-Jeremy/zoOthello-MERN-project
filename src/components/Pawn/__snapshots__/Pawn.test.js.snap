@@ -5,7 +5,7 @@ exports[`Pawn Basic rendering 1`] = `
   <img
     alt="duck pawn"
     class="duckFace red"
-    data-testid="test-pawn"
+    data-testid="test-pawn-red"
     src="./assets/img/duck-red.png"
   />
 </DocumentFragment>

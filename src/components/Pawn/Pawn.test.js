@@ -18,12 +18,12 @@ describe('Pawn', () => {
 
   it('Should have "red" as a className', () => {
     const { getByTestId } = wrapper
-    expect(getByTestId('test-pawn')).toHaveClass('red')
+    expect(getByTestId('test-pawn-red')).toHaveClass('red')
   })
 
   it('Should change "red" className to "yellow" on props change', () => {
     const { rerender, getByTestId } = wrapper
     rerender(<Pawn color={'white'} />)
-    expect(getByTestId('test-pawn')).toHaveClass('yellow')
+    expect(getByTestId('test-pawn-yellow')).toHaveClass('yellow')
   })
 })
