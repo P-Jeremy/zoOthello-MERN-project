@@ -1,23 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Square Basic rendering 1`] = `
-<div
-  className="zoom"
-  onKeyPress={[Function]}
-  tabIndex={0}
->
+<DocumentFragment>
   <div
-    className="square"
-    onClick={[Function]}
-    onDragOver={[Function]}
-    onDrop={[Function]}
-    onKeyPress={[Function]}
-    tabIndex={-1}
+    class="zoom"
+    tabindex="0"
   >
-    <img
-      className="duckFace yellow"
-      src="./assets/img/duck-yellow.png"
-    />
+    <div
+      class="square"
+      tabindex="-1"
+    >
+      <img
+        alt="duck pawn"
+        class="duckFace yellow"
+        data-testid="test-pawn"
+        src="./assets/img/duck-yellow.png"
+      />
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;

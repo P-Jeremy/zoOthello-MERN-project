@@ -1,16 +1,12 @@
-import 'jsdom-global/register'
 import React from 'react'
-import { configure, mount } from 'enzyme'
-import TestRenderer from 'react-test-renderer'
-import Adapter from 'enzyme-adapter-react-16'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import Square from './Square'
 
-configure({ adapter: new Adapter() })
-
-let renderer
 const click = jest.fn()
+let wrapper
 beforeEach(() => {
-  renderer = mount(
+  wrapper = render(
     <Square
       rowI={3}
       colI={3}
@@ -21,22 +17,26 @@ beforeEach(() => {
 
 describe('Square', () => {
   it('Basic rendering', () => {
-    const renderer = TestRenderer.create(
-      <Square value={'WHITE'}/>)
-    const result = renderer.toJSON()
-    expect(result).toMatchSnapshot()
+    const { asFragment } = wrapper
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it('should render one pawn', () => {
-    expect(renderer.find('img')).toHaveLength(1)
+    const { queryAllByAltText } = wrapper
+    const img = queryAllByAltText('duck pawn')
+    expect(img).toHaveLength(1)
   })
 
   it('should render one pawn with className "yellow"', () => {
-    expect(renderer.find('.yellow')).toHaveLength(1)
+    const { getByAltText } = wrapper
+    const img = getByAltText('duck pawn')
+    expect(img).toHaveClass('yellow')
   })
 
   it('should render one pawn with className "red" on props value={"BLACK"}', () => {
-    renderer.setProps({ value: 'BLACK' })
-    expect(renderer.find('.red')).toHaveLength(1)
+    const { rerender } = wrapper
+    rerender(<Square value={'BLACK'} />)
+    const img = wrapper.getByAltText('duck pawn')
+    expect(img).toHaveClass('red')
   })
 })
