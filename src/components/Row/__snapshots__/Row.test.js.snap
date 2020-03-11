@@ -4,6 +4,7 @@ exports[`Row Basic rendering 1`] = `
 <DocumentFragment>
   <div
     class="row"
+    data-testid="row"
   >
     <div
       class="zoom"
@@ -11,6 +12,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       />
     </div>
@@ -20,6 +22,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       />
     </div>
@@ -29,6 +32,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       />
     </div>
@@ -38,6 +42,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       >
         <img
@@ -54,6 +59,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       >
         <img
@@ -70,6 +76,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       />
     </div>
@@ -79,6 +86,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       />
     </div>
@@ -88,6 +96,7 @@ exports[`Row Basic rendering 1`] = `
     >
       <div
         class="square"
+        data-testid="square"
         tabindex="-1"
       />
     </div>

@@ -5,7 +5,7 @@ import './Row.scss'
 
 export default function Row ({ col, click }) {
   return (
-    < div className="row">
+    < div className="row" data-testid='row'>
       {col.map((square, i) => (
         <Square
           key={i}

@@ -62,6 +62,7 @@ export default function Square ({ value, click, rowI, colI }) {
       <div
         tabIndex={-1}
         className="square"
+        data-testid="square"
         onKeyPress={(e) => handleEnter(e, rowI, colI)}
         onClick={() => handleClick(rowI, colI)}
         onDragOver={handleDragOver}

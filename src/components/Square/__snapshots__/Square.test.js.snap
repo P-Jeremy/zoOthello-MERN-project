@@ -8,6 +8,7 @@ exports[`Square Basic rendering 1`] = `
   >
     <div
       class="square"
+      data-testid="square"
       tabindex="-1"
     >
       <img
