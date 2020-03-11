@@ -1,33 +1,29 @@
-import 'jsdom-global/register'
 import React from 'react'
-import TestRenderer from 'react-test-renderer'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import Pawn from './Pawn'
 
-let renderer
+let wrapper
 beforeEach(() => {
-  renderer = TestRenderer.create(
+  wrapper = render(
     <Pawn color={'black'}/>
   )
 })
 
 describe('Pawn', () => {
   it('Basic rendering', () => {
-    const result = renderer.toJSON()
-    expect(result).toMatchSnapshot()
+    const { asFragment } = wrapper
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it('Should have "red" as a className', () => {
-    const instance = renderer.root
-    const element = instance.findByType('img')
-    expect(element.props.className.includes('red')).toBe(true)
+    const { getByTestId } = wrapper
+    expect(getByTestId('test-pawn-red')).toHaveClass('red')
   })
 
-  it('Should change "yellow" className to white on props change', () => {
-    renderer.update(<Pawn color={'white'}/>)
-    const instance = renderer.root
-    const element = instance.findByType('img')
-    const result = renderer.toJSON()
-    expect(result).toMatchSnapshot()
-    expect(element.props.className.includes('yellow')).toBe(true)
+  it('Should change "red" className to "yellow" on props change', () => {
+    const { rerender, getByTestId } = wrapper
+    rerender(<Pawn color={'white'} />)
+    expect(getByTestId('test-pawn-yellow')).toHaveClass('yellow')
   })
 })

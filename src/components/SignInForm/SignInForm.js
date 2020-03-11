@@ -33,9 +33,19 @@ export default class SignInForm extends Component {
     this.props.logIn(user)
   }
 
+  hasInvalidFields = () => {
+    const { password, pseudo } = this.state
+    if (password.trim() !== '' && pseudo.trim() !== '') {
+      return false
+    }
+    return true
+  }
+
   render () {
     const { pseudo, password, redirectToUserHome } = this.state
     const { handleChange, handleSubmit } = this
+    const isDisabled = this.hasInvalidFields() ? true : null
+
     if (redirectToUserHome === true) {
       return (<Redirect to="/"/>)
     }
@@ -54,7 +64,7 @@ export default class SignInForm extends Component {
                 <Form.Label>Mot de passe</Form.Label>
                 <Form.Control onChange={handleChange.bind(this)} name="password" value={password} type="password" placeholder="Mot de passe" />
               </Form.Group>
-              <Button variant="secondary" type="submit">
+              <Button variant="secondary" type="submit" disabled={isDisabled}>
               Valider
               </Button>
             </Form>
