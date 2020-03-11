@@ -4,8 +4,8 @@ import '@testing-library/jest-dom/extend-expect'
 import Row from './Row'
 import reversi from 'reversi'
 
-const GameGameInstance = reversi.Game
-const game = new GameGameInstance()
+const GameInstance = reversi.Game
+const game = new GameInstance()
 
 const col = game._board._squares[4]
 const colAfterBlackMove = [

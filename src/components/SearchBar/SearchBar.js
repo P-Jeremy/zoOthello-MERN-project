@@ -63,7 +63,7 @@ export default class SearchBar extends Component {
     const { opponent, opponents } = this.state
     const { handleNewGame, handleChange, selectOption } = this
     return (
-      <div className="searchBar">
+      <div className="searchBar" data-testid="searchBar">
         <Container>
           <Form autoComplete="off" style={ { position: 'relative', margin: '3rem auto' }} onSubmit={handleNewGame.bind(this)}>
             <Form.Group style={{ position: 'relative', zIndex: 1, width: '15rem', margin: '0 auto' }} controlId="pseudo">

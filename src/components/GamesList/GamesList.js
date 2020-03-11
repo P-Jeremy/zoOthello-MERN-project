@@ -47,18 +47,20 @@ class GamesList extends Component {
     const { deleteGame } = this
     return (
       <>
-        {
-          opponent.pseudo.length > 0 &&
-          <div className= "listItem">
-            <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${gameData._id}`}>
-              <span>Toi vs {`${opponent.pseudo} ${currentPlayerId === userId ? '(à ton tour)' : ''}`}
-              </span>
-            </ListGroup.Item>
-            <Button variant="danger" className="deleteBtn" onClick={deleteGame.bind(this)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </Button>
-          </div>
-        }
+        <div className= "listItem" data-testid={'listItem'}>
+          {
+            opponent.pseudo.length > 0 &&
+            <>
+              <ListGroup.Item className="gamesListItem" action variant="secondary" href={`/game/${gameData._id}`}>
+                <span>Toi vs {`${opponent.pseudo} ${currentPlayerId === userId ? '(à ton tour)' : ''}`}
+                </span>
+              </ListGroup.Item>
+              <Button variant="danger" className="deleteBtn" onClick={deleteGame.bind(this)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </Button>
+            </>
+          }
+        </div>
       </>
     )
   }
