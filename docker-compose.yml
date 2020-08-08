@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  mongodb_container:
+    image: mongo:latest
+    container_name: zoothello_test
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: zoothello_test
+    ports:
+      - 27017:27017

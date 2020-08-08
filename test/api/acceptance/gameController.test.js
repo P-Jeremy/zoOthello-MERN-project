@@ -1,18 +1,26 @@
-const reversi = require('../../../node_modules/reversi/index')
-const Reversi = reversi.Game
-
+const chai = require('chai')
 const chaiHttp = require('chai-http')
 
-const app = require('../../../server')
-const chai = require('chai')
+const { app, server } = require('../../../server')
+const reversi = require('../../../node_modules/reversi/index')
+const mongoose = require('mongoose')
+const { expect } = require('chai')
+const Reversi = reversi.Game
 
 chai.use(chaiHttp)
 chai.should()
 
 const newGame = new Reversi()
 
+afterAll(async () => {
+  await mongoose.connection.db.dropDatabase()
+  await mongoose.connection.close()
+  await server.close()
+})
+
 describe('Acceptance | Api | gameController', () => {
   let gameId = ''
+
   describe('POST /', () => {
     it('should store a game in DB', (done) => {
       const blackPassCount = 0
@@ -27,11 +35,11 @@ describe('Acceptance | Api | gameController', () => {
         .send(data)
         .end((_err, res) => {
           gameId = String(res.body._id)
-          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.should.have.property('_id')
           res.body.should.have.property('whitePassCount', 0)
           res.body.should.have.property('blackPassCount', 0)
+          expect(res).to.have.status(200)
           done()
         })
     })
@@ -42,9 +50,9 @@ describe('Acceptance | Api | gameController', () => {
       chai.request(app)
         .get('/api/game')
         .end((_err, res) => {
-          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.map(e => e.should.have.property('_id'))
+          expect(res).to.have.status(200)
           done()
         })
     })
@@ -52,7 +60,6 @@ describe('Acceptance | Api | gameController', () => {
 
   describe('UPDATE /', () => {
     it('should update a game', (done) => {
-      /** We use the POST test game _id */
       const id = gameId
       const blackPassCount = 1
       const whitePassCount = 0
@@ -64,11 +71,11 @@ describe('Acceptance | Api | gameController', () => {
         .put(`/api/game/${id}`)
         .send(data)
         .end((_err, res) => {
-          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.should.have.property('_id', id)
           res.body.should.have.property('blackPassCount', 1)
           res.body.should.have.property('whitePassCount', 0)
+          expect(res).to.have.status(200)
           done()
         })
     })
@@ -80,7 +87,7 @@ describe('Acceptance | Api | gameController', () => {
       chai.request(app)
         .delete(`/api/game/delete/${id}`)
         .end((_err, res) => {
-          res.should.have.status(200)
+          expect(res).to.have.status(200)
           done()
         })
     })
