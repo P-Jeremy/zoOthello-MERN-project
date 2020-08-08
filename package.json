@@ -8,7 +8,7 @@
     "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node server.js",
     "test:client": "jest src/components --env=jsdom",
-    "test:server": "jest test/api",
+    "test:server": "jest test/api --maxWorkers=1",
     "build": "webpack --mode production",
     "lint": "eslint **/*.js"
   },
