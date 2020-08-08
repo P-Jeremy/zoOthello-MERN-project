@@ -2,7 +2,7 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 
 const { app, server } = require('../../../server')
-const reversi = require('../../../node_modules/reversi/index')
+const reversi = require('reversi')
 const mongoose = require('mongoose')
 const { expect } = require('chai')
 const Reversi = reversi.Game
@@ -18,7 +18,7 @@ afterAll(async () => {
   await server.close()
 })
 
-describe('Acceptance | Api | gameController', () => {
+describe('Acceptance | Api | gameRouter', () => {
   let gameId = ''
 
   describe('POST /', () => {

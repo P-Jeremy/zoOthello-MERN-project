@@ -14,7 +14,7 @@ afterAll(async () => {
   await server.close()
 })
 
-describe('Acceptance | Api | userController', () => {
+describe('Acceptance | Api | userRouter', () => {
   describe('POST /', () => {
     it('should save a new user in DB', (done) => {
       const data = {
