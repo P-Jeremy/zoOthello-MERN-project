@@ -8,7 +8,7 @@
     "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node server.js",
     "test:client": "jest src/components --env=jsdom",
-    "test:server": "jest ./controllers",
+    "test:server": "jest test/api",
     "build": "webpack --mode production",
     "lint": "eslint **/*.js"
   },
@@ -86,6 +86,8 @@
     "copy-webpack-plugin": "^5.1.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",

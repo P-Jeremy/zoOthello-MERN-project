@@ -1,30 +1,20 @@
-// Import the dependencies for testing
-const chaiHttp = require('chai-http')
-
-/** App exported from server.js */
-const app = require('../server')
-const chai = require('chai')
-
-/** Reversi lib */
-const reversi = require('../othello-react/node_modules/reversi/index')
+const reversi = require('../../../node_modules/reversi/index')
 const Reversi = reversi.Game
 
-const newGame = new Reversi()
+const chaiHttp = require('chai-http')
 
-// Configure chai
+const app = require('../../../server')
+const chai = require('chai')
+
 chai.use(chaiHttp)
 chai.should()
 
-describe('Games', () => {
-  /** This will be updated after the POST test */
+const newGame = new Reversi()
+
+describe('Acceptance | Api | gameController', () => {
   let gameId = ''
-  /** POST TEST
-   * We insert a fake Game in DB and we test
-   * the properties of the response object
-   */
   describe('POST /', () => {
-    // Test to post a single game
-    it('should post game', (done) => {
+    it('should store a game in DB', (done) => {
       const blackPassCount = 0
       const whitePassCount = 0
       const data = {
@@ -47,10 +37,8 @@ describe('Games', () => {
     })
   })
 
-  /** GET test */
   describe('GET /', () => {
-    // Test to get all games
-    it('should get all games', (done) => {
+    it('should return an array of game instance', (done) => {
       chai.request(app)
         .get('/api/game')
         .end((_err, res) => {
@@ -62,10 +50,8 @@ describe('Games', () => {
     })
   })
 
-  /** UPDATE TEST */
   describe('UPDATE /', () => {
-    // Test to update single game
-    it('should update game', (done) => {
+    it('should update a game', (done) => {
       /** We use the POST test game _id */
       const id = gameId
       const blackPassCount = 1
@@ -78,7 +64,6 @@ describe('Games', () => {
         .put(`/api/game/${id}`)
         .send(data)
         .end((_err, res) => {
-          /** We check the response status, type and properties */
           res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.should.have.property('_id', id)
@@ -89,17 +74,12 @@ describe('Games', () => {
     })
   })
 
-  /** DELETE test
-   * In this final test we delete the fake game created by the POST test
-   */
   describe('DELETE /', () => {
-    // Test to delete single game
-    it('should delete game', (done) => {
+    it('should delete one game', (done) => {
       const id = gameId
       chai.request(app)
         .delete(`/api/game/delete/${id}`)
         .end((_err, res) => {
-          /** We check the response status */
           res.should.have.status(200)
           done()
         })
