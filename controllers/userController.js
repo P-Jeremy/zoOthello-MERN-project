@@ -15,8 +15,8 @@ module.exports = class UserController {
     const foundUserByPseudo = await User.findOne({ pseudo: pseudo })
     const foundUserByEmail = await User.findOne({ email: email })
 
-    if (foundUserByEmail) res.status(409).send({ message: 'email already used' })
-    if (foundUserByPseudo) res.status(409).send({ message: 'pseudo already used' })
+    if (foundUserByEmail) return res.status(409).send({ message: 'email already used' })
+    if (foundUserByPseudo) return res.status(409).send({ message: 'pseudo already used' })
 
     try {
       const newUser = new User({
