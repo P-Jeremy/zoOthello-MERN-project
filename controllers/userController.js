@@ -2,21 +2,21 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 
 const validPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
-const validPseudo = /^[a-z0-9_-]{3,15}$/gm
+const validPseudo = /^[A-z0-9_-]{3,15}$/gm
 
 module.exports = class UserController {
   async addUser (req, res) {
     const { email, pseudo, password } = req.body
 
-    if (!password.match(validPassword)) res.status(409).json({ message: 'password' })
-    if (!pseudo.match(validPseudo)) res.status(409).json({ message: 'invalidPseudo' })
+    if (!password.match(validPassword)) res.status(409).send({ message: 'invalidPassword' })
+    if (!pseudo.match(validPseudo)) res.status(409).send({ message: 'invalidPseudo' })
 
     const hash = await bcrypt.hash(password, 10)
     const foundUserByPseudo = await User.findOne({ pseudo: pseudo })
     const foundUserByEmail = await User.findOne({ email: email })
 
-    if (foundUserByEmail) res.status(409).json({ message: 'email' })
-    if (foundUserByPseudo) res.status(409).json({ message: 'pseudo' })
+    if (foundUserByEmail) res.status(409).send({ message: 'email already used' })
+    if (foundUserByPseudo) res.status(409).send({ message: 'pseudo already used' })
 
     try {
       const newUser = new User({
@@ -25,9 +25,9 @@ module.exports = class UserController {
         password: hash
       })
       const result = await newUser.save()
-      return res.status(200).json(result)
+      return res.status(200).send(result)
     } catch (error) {
-      res.status(500).json(error.message)
+      res.status(500).send(error.message)
     }
   }
 
@@ -44,7 +44,6 @@ module.exports = class UserController {
     return res.status(200).json({ fetchedUsers })
   }
 
-  /** Allows a user to signin */
   async signIn (req, res, next) {
     const fetchedUser = await User.findOne({ pseudo: req.body.pseudo })
     if (!fetchedUser) {
