@@ -63,4 +63,21 @@ describe('Acceptance | Api | userController', () => {
         })
     })
   })
+
+  describe('POST /search', () => {
+    it('should find an existing user in DB', (done) => {
+      const data = {
+        search: 'zenikanard'
+      }
+      chai.request(app)
+        .post('/api/user/search')
+        .send(data)
+        .then(res => {
+          const { fetchedUsers } = res.body
+          expect(fetchedUsers).to.be.instanceOf(Array)
+          expect(res).to.have.status(200)
+          done()
+        })
+    })
+  })
 })
