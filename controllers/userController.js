@@ -25,7 +25,7 @@ module.exports = class UserController {
         password: hash
       })
       const result = await newUser.save()
-      return res.status(200).send(result)
+      return res.status(200).json(result)
     } catch (error) {
       res.status(500).send(error.message)
     }
@@ -41,14 +41,15 @@ module.exports = class UserController {
 
   async getUserInfo (req, res, next) {
     const { id } = req.params
-    const fetchedUsers = await User.find({ _id: id })
-    return res.status(200).json({ fetchedUsers })
+    const fetchedUser = await User.find({ _id: id })
+    if (fetchedUser.length < 1) return res.status(404).end()
+    return res.status(200).json(fetchedUser)
   }
 
   async signIn (req, res, next) {
     const fetchedUser = await User.findOne({ pseudo: req.body.pseudo })
     if (!fetchedUser) {
-      return res.status(403).json({
+      return res.status(403).send({
         message: "User doesn't exist"
       })
     }
@@ -60,7 +61,7 @@ module.exports = class UserController {
       if (allowedUser) {
         return res.status(200).json({ fetchedUser })
       } else {
-        return res.status(403).json({
+        return res.status(403).send({
           message: "User doesn't"
         })
       }

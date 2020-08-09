@@ -15,7 +15,8 @@ afterAll(async () => {
 })
 
 describe('Acceptance | Api | userRouter', () => {
-  describe('POST /', () => {
+  let userId = ''
+  describe('POST /api/user/', () => {
     it('should save a new user in DB', (done) => {
       const data = {
         pseudo: 'zenikanard',
@@ -26,6 +27,7 @@ describe('Acceptance | Api | userRouter', () => {
         .post('/api/user')
         .send(data)
         .then(res => {
+          userId = String(res.body._id)
           res.body.should.be.a('object')
           res.body.should.have.property('_id')
           expect(res).to.have.status(200)
@@ -64,7 +66,7 @@ describe('Acceptance | Api | userRouter', () => {
     })
   })
 
-  describe('POST /search', () => {
+  describe('POST api/user/search', () => {
     it('should find an existing user in DB', (done) => {
       const data = {
         search: 'zenikanard'
@@ -82,7 +84,7 @@ describe('Acceptance | Api | userRouter', () => {
     })
   })
 
-  describe('POST /search', () => {
+  describe('POST api/user/search', () => {
     it('should not find users in DB', (done) => {
       const data = {
         search: 'kanard'
@@ -92,6 +94,19 @@ describe('Acceptance | Api | userRouter', () => {
         .send(data)
         .then(res => {
           expect(res).to.have.status(404)
+          done()
+        })
+    })
+  })
+
+  describe('GET api/user/:id', () => {
+    it('should get one user from DB', (done) => {
+      chai.request(app)
+        .get(`/api/user/${userId}`)
+        .then(res => {
+          res.body.should.be.a('object')
+          res.body.fetchedUser[0].should.have.property('_id', userId)
+          expect(res).to.have.status(200)
           done()
         })
     })
