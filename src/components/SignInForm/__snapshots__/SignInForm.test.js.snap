@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignInForm /> renders 1`] = `
+<DocumentFragment>
+  <div
+    style="margin: 3rem;"
+  >
+    <div
+      class="Toastify"
+    />
+    <div
+      class="container"
+    >
+      <h2>
+        Connexion
+      </h2>
+      <div
+        class="forms card"
+      >
+        <form
+          class=""
+        >
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="formBasicPseudo"
+            >
+              Pseudo
+            </label>
+            <input
+              class="form-control"
+              id="formBasicPseudo"
+              name="pseudo"
+              placeholder="Pseudo"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="formBasicPassword"
+            >
+              Mot de passe
+            </label>
+            <input
+              class="form-control"
+              id="formBasicPassword"
+              name="password"
+              placeholder="Mot de passe"
+              type="password"
+              value=""
+            />
+          </div>
+          <button
+            class="btn btn-secondary"
+            disabled=""
+            type="submit"
+          >
+            Valider
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

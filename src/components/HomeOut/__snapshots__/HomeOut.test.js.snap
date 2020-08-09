@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeOut Basic rendering 1`] = `
+<DocumentFragment>
+  <div
+    class="homeOut"
+  >
+    <h2>
+      Just like othello, but with a dash of 'Z'
+    </h2>
+    <table>
+      <tbody>
+        <tr>
+          <th
+            scope="col"
+          >
+            <img
+              src="./assets/img/duck-red.png"
+            />
+          </th>
+          <th
+            scope="col"
+          >
+            <img
+              src="./assets/img/duck-yellow.png"
+            />
+          </th>
+        </tr>
+        <tr>
+          <th
+            scope="col"
+          >
+            <img
+              src="./assets/img/duck-yellow.png"
+            />
+          </th>
+          <th
+            scope="col"
+          >
+            <img
+              src="./assets/img/duck-red.png"
+            />
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;
