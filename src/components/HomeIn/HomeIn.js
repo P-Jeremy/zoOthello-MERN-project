@@ -59,15 +59,15 @@ export default class HomeIn extends Component {
     return (
       <Container className="gamesList">
         <SearchBar/>
-        <ListGroup>
-          {
-            games.length > 0 &&
-              <div>
-                <h3>Partie(s) en cours</h3>
-                {games.map((game) => <GamesList updateVue={updateVue.bind(this)} key={game._id} gameData={game} />)}
-              </div>
-          }
-        </ListGroup>
+        {
+          games.length > 0 &&
+          <ListGroup>
+            <div>
+              <h3>Partie(s) en cours</h3>
+              {games.map((game) => <GamesList updateVue={updateVue.bind(this)} key={game._id} gameData={game} />)}
+            </div>
+          </ListGroup>
+        }
       </Container>
     )
   }

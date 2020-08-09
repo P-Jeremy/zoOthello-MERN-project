@@ -1,3 +1,5 @@
+process.env.MONGO_CONFIG_URL = 'mongodb://root:rootpassword@localhost:27017'
+
 module.exports = {
   clearMocks: true,
   coverageDirectory: 'coverage',
