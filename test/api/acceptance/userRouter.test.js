@@ -75,7 +75,23 @@ describe('Acceptance | Api | userRouter', () => {
         .then(res => {
           const { fetchedUsers } = res.body
           expect(fetchedUsers).to.be.instanceOf(Array)
+          expect(fetchedUsers.length).to.be.equal(1)
           expect(res).to.have.status(200)
+          done()
+        })
+    })
+  })
+
+  describe('POST /search', () => {
+    it('should not find users in DB', (done) => {
+      const data = {
+        search: 'kanard'
+      }
+      chai.request(app)
+        .post('/api/user/search')
+        .send(data)
+        .then(res => {
+          expect(res).to.have.status(404)
           done()
         })
     })

@@ -35,6 +35,7 @@ module.exports = class UserController {
     const { search } = req.body
     const userRegex = new RegExp('^' + search, 'i')
     const fetchedUsers = await User.find({ pseudo: { $regex: userRegex } })
+    if (fetchedUsers.length < 1) return res.status(404).end()
     return res.status(200).json({ fetchedUsers })
   }
 
