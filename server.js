@@ -11,4 +11,6 @@ app.set('socketIo', io)
 
 module.exports = { app, server }
 
-server.listen(port, () => console.log('Server listenning on:', port))
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(port, () => console.log('Server listenning on:', port))
+}
