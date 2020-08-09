@@ -1,5 +1,5 @@
 const http = require('http')
-const app = require('./app')
+const app = require('./expressApp')
 const socketio = require('socket.io')
 
 const port = process.env.PORT || '3000'

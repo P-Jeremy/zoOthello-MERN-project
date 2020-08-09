@@ -1,9 +1,13 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',
   filename: './index.html'
 })
+const assetsPlugin = new CopyWebpackPlugin([
+  { from: 'src/assets', to: 'assets' }
+])
 module.exports = {
   entry: './src/index.js',
   devtool: 'source-map',
@@ -11,7 +15,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
-  plugins: [htmlPlugin],
+  plugins: [htmlPlugin, assetsPlugin],
   module: {
     rules: [
       {
