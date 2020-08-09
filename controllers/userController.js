@@ -43,7 +43,7 @@ module.exports = class UserController {
     const { id } = req.params
     const fetchedUser = await User.find({ _id: id })
     if (fetchedUser.length < 1) return res.status(404).end()
-    return res.status(200).json(fetchedUser)
+    return res.status(200).json({ fetchedUser })
   }
 
   async signIn (req, res, next) {
@@ -62,7 +62,7 @@ module.exports = class UserController {
         return res.status(200).json({ fetchedUser })
       } else {
         return res.status(403).send({
-          message: "User doesn't"
+          message: "User doesn't exist"
         })
       }
     } catch (error) {

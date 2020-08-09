@@ -111,4 +111,50 @@ describe('Acceptance | Api | userRouter', () => {
         })
     })
   })
+
+  describe('POST api/user/signin', () => {
+    it('should allow one user to connect with right credentials', (done) => {
+      const user = {
+        pseudo: 'zenikanard',
+        password: 'Tatatoto2020!'
+      }
+      chai.request(app)
+        .post('/api/user/signin')
+        .send(user)
+        .then(res => {
+          res.body.should.be.a('object')
+          res.body.fetchedUser.should.have.property('_id', userId)
+          expect(res).to.have.status(200)
+          done()
+        })
+    })
+
+    it('should send a 403 status if a user tries to login with wrong pseudo', (done) => {
+      const user = {
+        pseudo: 'kanard',
+        password: 'Tatatoto2020!'
+      }
+      chai.request(app)
+        .post('/api/user/signin')
+        .send(user)
+        .then(res => {
+          expect(res).to.have.status(403)
+          done()
+        })
+    })
+
+    it('should send a 403 status if a user tries to login with wrong password', (done) => {
+      const user = {
+        pseudo: 'zenikanard',
+        password: 'Tatatoto'
+      }
+      chai.request(app)
+        .post('/api/user/signin')
+        .send(user)
+        .then(res => {
+          expect(res).to.have.status(403)
+          done()
+        })
+    })
+  })
 })
