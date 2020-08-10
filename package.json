@@ -2,12 +2,12 @@
   "name": "zoOthello",
   "version": "1.0.0",
   "description": "A react(no CRA)/Express/mongoDB Othello game",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "server": "nodemon --exec babel-node server.js",
+    "server": "nodemon --exec babel-node lib/server.js",
     "webpack": "webpack --mode development -w",
-    "dev": "webpack --mode development && nodemon --exec babel-node server.js",
-    "test:client": "jest src/components --env=jsdom",
+    "dev": "webpack --mode development && nodemon --exec babel-node lib/server.js",
+    "test:client": "jest react/src/components --env=jsdom",
     "test:server": "jest test/api --maxWorkers=1",
     "build": "webpack --mode production",
     "lint": "eslint **/*.js"
