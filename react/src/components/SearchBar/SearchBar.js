@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import reversi from 'reversi/index'
+import reversi from 'reversi'
 import { Button, Form, Container } from 'react-bootstrap'
 import './SearchBar.scss'
 
