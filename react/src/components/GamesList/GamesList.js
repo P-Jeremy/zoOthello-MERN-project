@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import './GamesList.scss'
 import { ListGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import PropTypes from 'prop-types'
 import axios from 'axios'
-import './GamesList.scss'
 
 const uri = 'http://localhost:3000/api'
 
