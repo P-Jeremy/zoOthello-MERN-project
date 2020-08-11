@@ -46,6 +46,7 @@ Your '.env' file should contain an environemnt variable that looks like this :
 - react ^16.12.0
 - @babel/runtime ^7.2.0
 - webpack ^4.41.5
+- docker
 
 ## Install
 
