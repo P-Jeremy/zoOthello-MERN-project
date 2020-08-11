@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - checkout
+      - run: npm ci
+
+  server: 
+    docker:
+      - image: 'circleci/node:latest'
+      - image: 'circleci/mongo:3'
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: npm ci
+      - run: docker-compose up -d
+      - run: npm run test:server
+
+  client:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm run test:client
+
+workflows:
+  version: 2
+  integration:
+    jobs:
+      - build
+      - server
+      - client

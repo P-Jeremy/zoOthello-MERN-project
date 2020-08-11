@@ -7,8 +7,9 @@
     "server": "nodemon --exec babel-node lib/server.js",
     "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node lib/server.js",
-    "test:client": "jest react/src/components --env=jsdom",
+    "test:client": "jest react/src --env=jsdom",
     "test:server": "jest test/api --maxWorkers=1",
+    "test:all": "npm run test:server && npm run test:client",
     "build": "webpack --mode production",
     "lint": "eslint **/*.js"
   },
@@ -55,11 +56,6 @@
     "react": "^16.12.0",
     "@babel/runtime": "^7.2.0",
     "webpack": "^4.41.5"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(css|less|scss|sss|styl)$": "<rootDir>/node_modules/jest-css-modules"
-    }
   },
   "husky": {
     "hooks": {
