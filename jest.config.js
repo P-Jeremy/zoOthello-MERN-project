@@ -1,4 +1,3 @@
-process.env.MONGO_CONFIG_URL = 'mongodb://root:rootpassword@localhost:27017'
 
 module.exports = {
   clearMocks: true,
@@ -11,6 +10,7 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
   },
+  moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
   transformIgnorePatterns: [
     '<rootDir>/(node_modules)/?!(react-toastify/dist/ReactToastify)+(css)$'
   ]
