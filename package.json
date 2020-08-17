@@ -8,10 +8,10 @@
     "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node lib/server.js",
     "test:client": "jest react/src --env=jsdom",
-    "test:server": "jest test/api --maxWorkers=1",
+    "test:server": "env MONGO_CONFIG_URL='mongodb://root:rootpassword@localhost:27017' nyc mocha lib/test/api --recursive --exit",
     "test:all": "npm run test:server && npm run test:client",
     "build": "webpack --mode production",
-    "lint": "eslint **/*.js"
+    "lint": "eslint '**/*.js' --no-error-on-unmatched-pattern"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "bootstrap": "^4.4.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "lodash.merge": "^4.6.2",
+    "lodash": "^4.17.19",
     "mongoose": "^5.8.9",
     "nodemon": "^2.0.2",
     "react": "^16.12.0",
@@ -59,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm run test:all"
     }
   },
   "devDependencies": {
@@ -79,13 +79,15 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.4",
-    "copy-webpack-plugin": "^5.1.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
+    "chai-sorted": "^0.2.0",
+    "copy-webpack-plugin": "^5.1.1",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^3.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",
@@ -101,9 +103,13 @@
     "jest-transform-css": "^2.0.0",
     "jsdom": "^16.2.1",
     "jsdom-global": "3.0.2",
+    "mocha": "^8.1.1",
+    "nyc": "^15.1.0",
     "postcss-loader": "^3.0.0",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
+    "sinon": "^9.0.3",
+    "sinon-chai": "^3.5.0",
     "style-loader": "^1.1.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",

@@ -9,3 +9,5 @@ dist
 .vscode
 
 .docker
+
+.nyc_output

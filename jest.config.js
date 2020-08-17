@@ -1,9 +1,8 @@
-process.env.MONGO_CONFIG_URL = 'mongodb://root:rootpassword@localhost:27017'
 
 module.exports = {
   clearMocks: true,
   coverageDirectory: 'coverage',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   transform: {
     '^.+\\.js$': 'babel-jest',
     '.+\\.(css|styl|less|sass|scss)$': 'jest-transform-css'
@@ -11,7 +10,10 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
   },
+  moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
   transformIgnorePatterns: [
     '<rootDir>/(node_modules)/?!(react-toastify/dist/ReactToastify)+(css)$'
-  ]
+  ],
+  modulePathIgnorePatterns: ['<rootDir>/lib/']
+
 }
