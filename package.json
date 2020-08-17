@@ -83,7 +83,7 @@
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
     "chai-sorted": "^0.2.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^6.0.3",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^3.2.0",
     "enzyme": "^3.11.0",
