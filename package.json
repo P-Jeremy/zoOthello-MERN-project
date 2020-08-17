@@ -11,7 +11,7 @@
     "test:server": "env MONGO_CONFIG_URL='mongodb://root:rootpassword@localhost:27017' mocha lib/test/api --recursive --exit",
     "test:all": "npm run test:server && npm run test:client",
     "build": "webpack --mode production",
-    "lint": "eslint **/*.js"
+    "lint": "eslint '**/*.js'"
   },
   "repository": {
     "type": "git",
