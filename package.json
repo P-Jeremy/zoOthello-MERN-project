@@ -8,10 +8,10 @@
     "webpack": "webpack --mode development -w",
     "dev": "webpack --mode development && nodemon --exec babel-node lib/server.js",
     "test:client": "jest react/src --env=jsdom",
-    "test:server": "env MONGO_CONFIG_URL='mongodb://root:rootpassword@localhost:27017' mocha lib/test/api --recursive --exit",
+    "test:server": "env MONGO_CONFIG_URL='mongodb://root:rootpassword@localhost:27017' nyc mocha lib/test/api --recursive --exit",
     "test:all": "npm run test:server && npm run test:client",
     "build": "webpack --mode production",
-    "lint": "eslint '**/*.js'"
+    "lint": "eslint '**/*.js' --no-error-on-unmatched-pattern"
   },
   "repository": {
     "type": "git",
@@ -104,6 +104,7 @@
     "jsdom": "^16.2.1",
     "jsdom-global": "3.0.2",
     "mocha": "^8.1.1",
+    "nyc": "^15.1.0",
     "postcss-loader": "^3.0.0",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",

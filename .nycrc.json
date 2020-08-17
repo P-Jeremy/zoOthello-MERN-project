@@ -1,0 +1,12 @@
+{
+  "all": true,
+  "include": [
+    "lib"
+  ],
+  "exclude": [
+    "react",
+    "node_modules",
+    "lib/db/models",
+    "lib/domain/models"
+  ]
+}
