@@ -66,11 +66,30 @@ npm run webpack
 npm run server
 ```
 
+## Launch server & client
+
+```sh
+npm run dev
+```
+
+## Launch Docker for testing
+
+```sh
+docker-compose up -d
+```
+
 ## Run client tests
 
 ```sh
 npm run test:client
 ```
+
+## Run server tests with coverage
+
+```sh
+npm run test:server
+```
+
 ## Run linter
 
 ```sh
