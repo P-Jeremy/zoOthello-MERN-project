@@ -72,7 +72,7 @@ npm run server
 npm run dev
 ```
 
-## Launch Docker for testing
+## Launch Docker for server testing
 
 ```sh
 docker-compose up -d
