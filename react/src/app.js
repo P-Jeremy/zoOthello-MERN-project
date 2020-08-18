@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.scss'
+import './app.scss'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import NavbarContainer from './components/Navbar/NavbarContainer'
 import Game from './components/Game/Game'
