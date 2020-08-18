@@ -5,9 +5,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
   template: './react/src/index.html',
   filename: './index.html'
 })
-const assetsPlugin = new CopyWebpackPlugin([
-  { from: 'react/src/assets', to: 'assets' }
-])
+const assetsPlugin = new CopyWebpackPlugin({
+  patterns: [
+    { from: 'react/src/assets', to: 'assets' }
+  ]
+})
 module.exports = {
   entry: './react/src/index.js',
   devtool: 'source-map',
