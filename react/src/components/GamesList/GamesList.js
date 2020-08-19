@@ -31,7 +31,7 @@ class GamesList extends Component {
 
   getOpponent = async (opponentId) => {
     const user = await axios.get(`${uri}/user/${opponentId}`)
-    const result = user.data.fetchedUser[0]
+    const result = user.data.fetchedUser
     await this.setState({ opponent: result })
   }
 
