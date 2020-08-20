@@ -48,7 +48,7 @@ export default class SignUpForm extends Component {
 
   renderTooltip (field, props) {
     const text = field === 'password'
-      ? 'Le mot de passe doit contenir 8 caractères minimum, au moins une majuscule, une minuscule, un chiffre et un caractère spécial'
+      ? 'Le mot de passe doit contenir 8 caractères minimum, au moins une majuscule, un chiffre et un caractère spécial'
       : 'Le pseudo doit contenir entre 3 et 15 caractères'
 
     return <Tooltip {...props}>{text}</Tooltip>
@@ -88,7 +88,7 @@ export default class SignUpForm extends Component {
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip.bind(this, 'password')}
                 >
-                  <Form.Control onChange={handleChange.bind(this)} name="password" value={password} type="password" placeholder="Mot de passe" />
+                  <Form.Control onChange={handleChange.bind(this)} pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$" name="password" value={password} type="password" placeholder="Mot de passe" />
                 </OverlayTrigger>
               </Form.Group>
               <Form.Group controlId="formBasicPasswordBis">
