@@ -11,3 +11,5 @@ dist
 .docker
 
 .nyc_output
+
+.history
