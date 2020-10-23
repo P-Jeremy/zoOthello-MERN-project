@@ -19,7 +19,7 @@ export const logIn = (user) => {
       .then((res) => {
         if (res.status === 200) {
           payload = true
-          localStorage.setItem('userId', res.data.fetchedUser._id)
+          localStorage.setItem('userId', res.data.fetchedUser.id)
           localStorage.setItem('loggedIn', true)
         }
       })
