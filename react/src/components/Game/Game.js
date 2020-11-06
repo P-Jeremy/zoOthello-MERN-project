@@ -235,7 +235,7 @@ export default class Game extends Component {
 
     if (blackPassCount > 1 || whitePassCount > 1) {
       origin = 'pass++'
-      return this.handleNewGame(origin)
+      return this.resetGameAfterSkippedTwoTimes()
     }
     origin = 'pass'
 
@@ -244,10 +244,7 @@ export default class Game extends Component {
     return this.updateGame({ origin, player: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo })
   }
 
-  /**
- * Allows to reset the game
- */
-handleNewGame = async (playerHasPassedTwice) => {
+resetGameAfterSkippedTwoTimes = async () => {
   const {
     gameId,
     game,
@@ -256,24 +253,14 @@ handleNewGame = async (playerHasPassedTwice) => {
     blackPlayer,
     whitePlayer
   } = this.state
-  const origin = 'new'
-  const isTwice = playerHasPassedTwice === 'pass++' ? 'pass++' : null
-  const newGame = new Reversi()
-  return axios.put(`${url}/newGame/${gameId}`, {
-    newGame,
-    whitePassCount: 0,
-    blackPassCount: 0,
-    blackPlayer: blackPlayer._id,
-    whitePlayer: whitePlayer._id,
-    origin,
-    player: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo,
-    isTwice
+  return axios.put(`${url}/resetGame/${gameId}`, {
+    looser: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo
   })
     .then((res) => this.setState(
       {
         gameId: res.data._id,
-        game: newGame,
-        nextPlayer: newGame._nextPieceType,
+        game: res.game,
+        nextPlayer: res.game._nextPieceType,
         blackPassCount,
         whitePassCount,
         score: null
