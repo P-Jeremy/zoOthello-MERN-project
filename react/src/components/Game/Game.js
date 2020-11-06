@@ -92,7 +92,7 @@ export default class Game extends Component {
       case 'pass':
         toast.warn(`${payload.player} a passé`)
         break
-      case 'pass++':
+      case 'hasPassedTwice':
         toast.warn(`${payload.player} a encore passé `)
         toast.error(`${payload.player} a perdu `)
         toast.info('Nouvelle partie')
@@ -124,6 +124,13 @@ export default class Game extends Component {
       this.toaster(payload)
       this.getGameData(gameId)
     })
+
+    socket.on('notAllowed', (payloadUserId) => {
+      const userId = localStorage.getItem('userId')
+      if (userId === String(payloadUserId)) {
+        toast.error('Attends ton tour...coin-coin')
+      }
+    })
   }
 
   /**
@@ -143,13 +150,23 @@ export default class Game extends Component {
    */
   updateGame = ({ origin, player }) => {
     const { gameId, game, blackPassCount, whitePassCount } = this.state
-    axios.put(`${url}/${gameId}`, {
+    axios.put(`${url}/update/move/${gameId}`, {
       whitePassCount,
       blackPassCount,
       game,
       origin,
       player
     })
+    return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
+  }
+
+  updateGameOnPass = async () => {
+    const { gameId } = this.state
+    const userId = localStorage.getItem('userId')
+    const result = await axios.put(`${url}/update/pass/${gameId}`, {
+      userId
+    })
+    const { game, blackPassCount, whitePassCount } = result.data
     return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
   }
 
@@ -204,69 +221,9 @@ export default class Game extends Component {
     return this.countPoints()
   }
 
-  /**
-   * Allows to pass turn
-   */
   handlePass = async () => {
-    let {
-      game,
-      blackPassCount,
-      whitePassCount,
-      blackPlayer,
-      whitePlayer,
-      nextPlayer
-    } = this.state
-    if (!this.isUserAllowedToPlay()) return
-    let origin
-    switch (game._nextPieceType) {
-      case 'BLACK':
-        game._nextPieceType = 'WHITE'
-        blackPassCount++
-        nextPlayer = 'WHITE'
-        break
-      case 'WHITE':
-        game._nextPieceType = 'BLACK'
-        whitePassCount++
-        nextPlayer = 'BLACK'
-        break
-      default:
-        break
-    }
-
-    if (blackPassCount > 1 || whitePassCount > 1) {
-      origin = 'pass++'
-      return this.resetGameAfterSkippedTwoTimes()
-    }
-    origin = 'pass'
-
-    await this.setState({ nextPlayer, whitePassCount: whitePassCount, blackPassCount: blackPassCount })
-
-    return this.updateGame({ origin, player: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo })
+    return this.updateGameOnPass()
   }
-
-resetGameAfterSkippedTwoTimes = async () => {
-  const {
-    gameId,
-    game,
-    blackPassCount,
-    whitePassCount,
-    blackPlayer,
-    whitePlayer
-  } = this.state
-  return axios.put(`${url}/resetGame/${gameId}`, {
-    looser: game._nextPieceType === 'WHITE' ? blackPlayer.pseudo : whitePlayer.pseudo
-  })
-    .then((res) => this.setState(
-      {
-        gameId: res.data._id,
-        game: res.game,
-        nextPlayer: res.game._nextPieceType,
-        blackPassCount,
-        whitePassCount,
-        score: null
-      }))
-    .catch(err => err)
-}
 
 /**
  * Allows to know if "YOU" or the opponent pseudo should be displayed
