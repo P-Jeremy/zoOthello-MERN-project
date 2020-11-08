@@ -40,7 +40,8 @@ export default class Game extends Component {
           whitePassCount: res.data.gameData.whitePassCount,
           blackPlayer: res.data.blackPlayerData,
           whitePlayer: res.data.whitePlayerData,
-          currentPlayer: res.data.currentPlayer
+          currentPlayer: res.data.currentPlayer,
+          score: res.data.gameData.score
         })
         return this.countPoints()
       }
@@ -100,22 +101,23 @@ export default class Game extends Component {
     })
   }
 
-  countPoints = () => {
-    const { game } = this.state
-    if (game !== null) {
-      const score = game.board.countByPieceType()
-      return this.setState({ score: score })
-    }
-  }
-
-  updateGameOnMove = (coordinates) => {
-    const { gameId, game, blackPassCount, whitePassCount } = this.state
+  updateGameOnMove = async (coordinates) => {
+    const { gameId } = this.state
     const userId = localStorage.getItem('userId')
-    axios.put(`${url}/update/move/${gameId}`, {
+    const result = await axios.put(`${url}/update/move/${gameId}`, {
       userId,
       coordinates
     })
-    return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
+    const { game, blackPassCount, whitePassCount, score, currentPlayer } = result.data
+
+    return this.setState({
+      nextPlayer: game._nextPieceType,
+      game,
+      blackPassCount,
+      whitePassCount,
+      score,
+      currentPlayer
+    })
   }
 
   updateGameOnPass = async () => {
@@ -124,8 +126,16 @@ export default class Game extends Component {
     const result = await axios.put(`${url}/update/pass/${gameId}`, {
       userId
     })
-    const { game, blackPassCount, whitePassCount } = result.data
-    return this.setState({ nextPlayer: game._nextPieceType, blackPassCount, whitePassCount })
+    const { game, blackPassCount, whitePassCount, score, currentPlayer } = result.data
+
+    return this.setState({
+      nextPlayer: game._nextPieceType,
+      game,
+      blackPassCount,
+      whitePassCount,
+      score,
+      currentPlayer
+    })
   }
 
   handleClick = (x, y) => {
@@ -134,8 +144,7 @@ export default class Game extends Component {
       x,
       y
     }
-    this.updateGameOnMove(coordinates)
-    return this.countPoints()
+    return this.updateGameOnMove(coordinates)
   }
 
   handlePass = async () => {
