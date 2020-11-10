@@ -23,7 +23,7 @@
   </a>
 </p>
 
-> A react(no CRA)/Express/mongoDB Othello game
+A react(no CRA)/Express/mongoDB Othello game
 
 ## Important
 
@@ -96,6 +96,8 @@ npm run test:server
 npm run lint
 ```
 
+## Special thanks
+[@kjirou](https://github.com/kjirou) for his Reversi package (https://www.npmjs.com/package/reversi)
 
 ## Author
 
