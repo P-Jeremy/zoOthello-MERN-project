@@ -35,10 +35,11 @@ class GamesList extends Component {
     await this.setState({ opponent: result })
   }
 
-  deleteGame () {
+  async deleteGame () {
     const gameId = this.props.gameData._id
-    axios.delete(`${uri}/game/delete/${gameId}`)
-      .then(() => this.props.updateVue())
+    const { userId } = this.state
+    await axios.put(`${uri}/game/delete/${gameId}`, { userId })
+    return this.props.updateVue()
   }
 
   render () {
