@@ -39,7 +39,7 @@ export default class HomeIn extends Component {
   getUsersGame (id) {
     return axios.get(`${uri}/game/user/${id}`)
       .then(res => this.setState({ games: res.data }))
-      .catch(err => console.error(err))
+      .catch(() => this.setState({ games: [] }))
   }
 
   /**
