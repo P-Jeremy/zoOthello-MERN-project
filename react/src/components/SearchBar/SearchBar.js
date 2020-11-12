@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import reversi from 'reversi'
 import { Button, Form, Container } from 'react-bootstrap'
 import './SearchBar.scss'
 
 import axios from 'axios'
 
 const uri = 'http://localhost:3000/api'
-
-const Reversi = reversi.Game
 
 export default class SearchBar extends Component {
   state = {
@@ -51,9 +48,8 @@ export default class SearchBar extends Component {
  * Allows to start a new game
  */
   handleNewGame () {
-    const newGame = new Reversi()
     const { userId, opponentId } = this.state
-    axios.post(`${uri}/game`, { newGame, blackPlayer: userId, whitePlayer: opponentId })
+    axios.post(`${uri}/game`, { blackPlayer: userId, whitePlayer: opponentId })
       .then(() => {
         this.setState({ opponent: '' })
       })
