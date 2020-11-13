@@ -1,6 +1,6 @@
 import { LOG_IN, CHECK_AUTH, LOG_OUT } from '../actions/authActions'
 
-export default function authReducer (state = false, action) {
+export default function authReducer (state = false, action = {}) {
   switch (action.type) {
     case CHECK_AUTH: {
       const isUserAuth = action.payload
