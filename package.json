@@ -7,7 +7,6 @@
     "start": "node lib/server.js",
     "server": "nodemon --exec babel-node lib/server.js",
     "webpack": "webpack --mode development -w",
-    "heroku-postbuild":"npm run build && npm run start",
     "dev": "webpack --mode development && nodemon --exec babel-node lib/server.js",
     "test:client": "jest react/src --env=jsdom",
     "test:server": "env MONGO_CONFIG_URL='mongodb://root:rootpassword@localhost:27017' NODE_ENV=test nyc mocha lib/test/lib --recursive --exit",
