@@ -7,7 +7,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
 
-const uri = 'http://localhost:3000/api'
+const uri = `${process.env.URI}/api`
 
 class GamesList extends Component {
   state = {

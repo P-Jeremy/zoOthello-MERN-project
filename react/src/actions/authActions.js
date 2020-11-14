@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const uri = 'http://localhost:3000/api/user'
+const uri = `${process.env.URI}/api/user`
 
 export const CHECK_AUTH = 'CHECK_AUTH'
 export const checkAuth = () => {

@@ -6,7 +6,7 @@ import { authErrors } from '../../lib/authErrors'
 
 import axios from 'axios'
 
-const uri = 'http://localhost:3000/api/user'
+const uri = `${process.env.URI}/api/user`
 
 export default class SignUpForm extends Component {
   state = {

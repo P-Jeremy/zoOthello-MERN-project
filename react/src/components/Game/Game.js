@@ -10,7 +10,7 @@ import Pawn from '../Pawn/Pawn'
 
 import 'react-toastify/dist/ReactToastify.css'
 
-const uri = 'http://localhost:3000'
+const uri = process.env.URI
 
 const socket = openSocket(uri)
 
