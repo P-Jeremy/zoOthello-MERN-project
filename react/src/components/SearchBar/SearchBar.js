@@ -4,7 +4,7 @@ import './SearchBar.scss'
 
 import axios from 'axios'
 
-const uri = 'http://localhost:3000/api'
+const uri = `${process.env.URI}/api`
 
 export default class SearchBar extends Component {
   state = {

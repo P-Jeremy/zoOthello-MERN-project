@@ -7,11 +7,11 @@ import GamesList from '../GamesList/GamesList'
 import openSocket from 'socket.io-client'
 import './HomeIn.scss'
 
-const socketUrl = 'http://localhost:3000'
+const socketUrl = process.env.URI
 
 const socket = openSocket(socketUrl)
 
-const uri = 'http://localhost:3000/api'
+const uri = `${socketUrl}/api`
 
 export default class HomeIn extends Component {
   state = {
