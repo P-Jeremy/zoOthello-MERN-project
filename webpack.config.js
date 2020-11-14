@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
@@ -10,6 +12,10 @@ const assetsPlugin = new CopyWebpackPlugin({
     { from: 'react/src/assets', to: 'assets' }
   ]
 })
+
+const dotEnv = new webpack.DefinePlugin({
+  'process.env': JSON.stringify(dotenv.config().parsed)
+})
 module.exports = {
   entry: './react/src/index.js',
   devtool: 'source-map',
@@ -17,7 +23,7 @@ module.exports = {
     path: path.join(__dirname, 'react/dist'),
     filename: '[name].js'
   },
-  plugins: [htmlPlugin, assetsPlugin],
+  plugins: [htmlPlugin, assetsPlugin, dotEnv],
   module: {
     rules: [
       {
