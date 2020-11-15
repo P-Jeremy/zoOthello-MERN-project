@@ -15,19 +15,18 @@ export const LOG_IN = 'LOG_IN'
 export const logIn = (user) => {
   return async function (dispatch) {
     let payload = false
-    await axios.post(`${uri}/signIn`, user)
-      .then((res) => {
-        if (res.status === 200) {
-          payload = true
-          localStorage.setItem('userId', res.data.fetchedUser.id)
-          localStorage.setItem('loggedIn', true)
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          toast.error('Verifiez vos identifiants')
-        }
-      })
+    try {
+      const result = await axios.post(`${uri}/signIn`, user)
+      if (result.status === 200) {
+        payload = true
+        localStorage.setItem('userId', result.data.fetchedUser.id)
+        localStorage.setItem('loggedIn', true)
+      }
+    } catch (err) {
+      if (err.response.status === 404) {
+        toast.error('Verifiez vos identifiants')
+      }
+    }
     dispatch({ type: LOG_IN, payload })
   }
 }
