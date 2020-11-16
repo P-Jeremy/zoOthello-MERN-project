@@ -15,9 +15,10 @@ const assetsPlugin = new CopyWebpackPlugin({
 
 const dotEnv = new webpack.DefinePlugin({
   'process.env': {
-    URI: JSON.stringify(process.env.URI)
+    URI: JSON.stringify(process.env.URI).split('\\"').join('')
   }
 })
+
 module.exports = {
   entry: './react/src/index.js',
   devtool: 'source-map',
