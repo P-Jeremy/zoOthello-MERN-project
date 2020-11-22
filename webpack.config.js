@@ -2,7 +2,10 @@ require('dotenv').config()
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const path = require('path')
+
+const isProd = process.env.NODE_ENV === 'production'
+const devtool = isProd ? 'nosources-source-map' : 'source-map'
+
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './react/src/index.html',
   filename: './index.html'
@@ -21,10 +24,12 @@ const dotEnv = new webpack.DefinePlugin({
 
 module.exports = {
   entry: './react/src/index.js',
-  devtool: 'source-map',
-  output: {
-    path: path.join(__dirname, 'react/dist'),
-    filename: '[name].js'
+  mode: isProd ? 'production' : 'development',
+  devtool: devtool,
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   plugins: [htmlPlugin, assetsPlugin, dotEnv],
   module: {

@@ -6,12 +6,12 @@
   "scripts": {
     "start": "node lib/server.js",
     "server": "nodemon --exec babel-node lib/server.js",
-    "webpack": "webpack --mode development -w",
-    "dev": "webpack --mode development && nodemon --exec babel-node lib/server.js",
+    "client": "webpack --mode development -w",
+    "dev": "npm run client && nodemon --exec babel-node lib/server.js",
     "test:client": "jest react/src --env=jsdom",
     "test:server": "env MONGO_CONFIG_URL='mongodb://root:rootpassword@localhost:27017' NODE_ENV=test nyc mocha lib/test/lib --recursive --exit",
     "test:all": "npm run test:server && npm run test:client",
-    "build": "webpack --mode production",
+    "build": "NODE_ENV=production webpack --mode production",
     "lint": "eslint '**/*.js' --no-error-on-unmatched-pattern"
   },
   "repository": {
