@@ -47,7 +47,7 @@
     "redux-thunk": "^2.3.0",
     "reversi": "^3.0.0",
     "socket.io": "^2.4.0",
-    "socket.io-client": "2.0.3",
+    "socket.io-client": "2.5.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",
     "utf-8-validate": "^5.0.3"
